@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0000ff">
+    <title>Login at LinkHub</title>
+    <link rel="shortcut icon" href="images/app/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="style/register.css">
+</head>
+<body>
+    <div class="main">
+        <div class="form-panel">
+            <form onsubmit="handleLogin(event)">
+                <img src="images/app/logo.png" alt="logo" id="logo">
+                <h1> Welcome back!</h1>
+                <p>Login your credentials to proceed</p>
+                <label for="email">Email <address></address></label>
+                <div>
+                    <img src="images/app/email.png" alt="">
+                    <input type="email" id="email" placeholder="you@example.com" required />
+                </div>
+                <label for="password">Password</label>
+                <div>
+                    <img src="images/app/lock.png" alt="">
+                    <input type="password" id="password" placeholder="••••••••••••" required />
+                </div>
+                <span>
+                    <input type="checkbox" name="" id="show-password"> Show password
+                </span>
+                <button type="submit" id="login">Login</button>
+                <span> 
+                    Don't have an account? 
+                    <a href="register.html"> Create Account </a>
+                </span>
+            </form>
+        </div>
+        <div class="display-panel">
+            <img src="images/app/login-illustration.png">
+            <h1>LinkHub</h1>
+            <p>"Welcome back! Linkhub is your personal online link organizer—simple, fast, and always there when you need it."</p>
+        </div>
+    </div>
+
+    <script>
+
+        // Signup handler
+        window.handleLogin = function (e) {
+            e.preventDefault();
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            alert(email + '\n' + password);
+        }
+    </script>
+    
+</body>
+</html>
