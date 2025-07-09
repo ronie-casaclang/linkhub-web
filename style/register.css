@@ -1,8 +1,4 @@
-:root{
-    --primary: #0000ff;
-}
-
-body{
+html, body{
     margin: 0;
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
@@ -34,9 +30,9 @@ body{
         radial-gradient(35.36% 35.36% at 0    75%,#0000 66%,#8d8dff 68% 70%,#0000 72%) 35px 35px/calc(2*35px) calc(2*35px),
         radial-gradient(35.36% 35.36% at 100% 25%,#0000 66%,#8d8dff 68% 70%,#0000 72%) 0 0/calc(2*35px) calc(2*35px),
         radial-gradient(35.36% 35.36% at 0    75%,#0000 66%,#8d8dff 68% 70%,#0000 72%) 0 0/calc(2*35px) calc(2*35px),
-        repeating-conic-gradient(#0000ff 0 25%,#0000 0 50%) 0 0/calc(2*35px) calc(2*35px),
+        repeating-conic-gradient(var(--primary) 0 25%,#0000 0 50%) 0 0/calc(2*35px) calc(2*35px),
         radial-gradient(#0000 66%,#8d8dff 68% 70%,#0000 72%) 0 calc(35px/2)/35px 35px
-        #0000ff;
+        var(--primary);
 }
 .display-panel > img { width: 300px; }
 .display-panel > h1 { margin: 0; }

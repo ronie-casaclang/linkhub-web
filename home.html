@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0000ff">
+    <title>LinkHub</title>
+    <link rel="shortcut icon" href="images/app/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="style/root.css">
+    <link rel="stylesheet" href="style/home.css">
+    <link rel="stylesheet" href="style/header.css">
+    <link rel="stylesheet" href="style/progressbar.css">
+    <link rel="stylesheet" href="style/dlgAddEdit.css">
+</head>
+<body>
+    
+    <!-- Dialog ProgressBar -->
+    <div id="dlgProgressBar">
+        <div id="progressBar"></div>
+    </div>
+    
+    <!-- Dialog Edit -->
+    <div id="dlgAddEdit">
+        <div>
+            <img id="dlgAddEditCloseBtn" src="images/app/close.png" title="close">
+            <img id="dlgEditIcon" src="images/icons/link.png" title="close">
+            <input type="text" id="txtItemId" style="display: none;">
+            <label>Label</label>
+            <input type="text" id="txtName">
+            <label>Link</label>
+            <input type="text" id="txtLink">
+            <div>
+                <button id="dlgDelete"> Delete </button>
+                <button id="dlgCancel"> Cancel </button>
+                <button id="dlgSave"> Save </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialog View -->
+    <div id="dlgView">
+        <div>
+            <img id="dlgClose" src="images/app/close.png" title="close">
+            <h3 id="lblName"> Name </h3>
+            <div>
+                <img id="dlgIcon" src="images/icons/link.png">
+                <p id="lblLink">www.samplelink.com/sample.only</p>
+            </div>
+            <div>
+                <button id="dlgEdit"> Edit </button>
+                <button id="dlgCopy"> Copy Link </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div>
+            <div class="logobox">
+                <img id="search" class="icons" src="images/app/search.png" alt="search">
+                <img id="logo" src="images/app/logo.png" alt="LinkHub">
+                <img id="profile" class="icons" src="images/app/dp.png" alt="profile">
+            </div>
+            <div class="searchbox">
+                <img src="images/app/search.png" alt="search" srcset="">
+                <input type="search" placeholder="Search..." id="txtSearch">
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main -->
+    <div class="main">
+        <div class="link-main">
+            <div class="linkbox">
+                <img src="images/icons/facebook.png">
+                <p> My Facebook Account </p>
+            </div>
+
+            <!-- Item / Content -->
+             <div class="linkbox">
+                <img src="images/icons/github.png">
+                <p> Github </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/instagram.png">
+                <p> Instagram </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/linkedin.png">
+                <p> linkedin </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/youtube.png">
+                <p> Youtube </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/figma.png">
+                <p> Figma </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/microsoft.png">
+                <p> Microsoft </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/google.png">
+                <p> Google </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/link.png">
+                <p> Link </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/facebook.png">
+                <p> Facebook </p>
+            </div>
+             <div class="linkbox">
+                <img src="images/icons/github.png">
+                <p> Github </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/instagram.png">
+                <p> Instagram </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/linkedin.png">
+                <p> linkedin </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/youtube.png">
+                <p> Youtube </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/figma.png">
+                <p> Figma </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/microsoft.png">
+                <p> Microsoft </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/google.png">
+                <p> Google </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/link.png">
+                <p> Link </p>
+            </div>
+             <div class="linkbox">
+                <img src="images/icons/github.png">
+                <p> Github </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/instagram.png">
+                <p> Instagram </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/linkedin.png">
+                <p> linkedin </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/youtube.png">
+                <p> Youtube </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/figma.png">
+                <p> Figma </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/microsoft.png">
+                <p> Microsoft </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/google.png">
+                <p> Google </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/link.png">
+                <p> Link </p>
+            </div>
+             <div class="linkbox">
+                <img src="images/icons/github.png">
+                <p> Github </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/instagram.png">
+                <p> Instagram </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/linkedin.png">
+                <p> linkedin </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/youtube.png">
+                <p> Youtube </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/figma.png">
+                <p> Figma </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/microsoft.png">
+                <p> Microsoft </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/google.png">
+                <p> Google </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/link.png">
+                <p> Link </p>
+            </div>
+             <div class="linkbox">
+                <img src="images/icons/github.png">
+                <p> Github </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/instagram.png">
+                <p> Instagram </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/linkedin.png">
+                <p> linkedin </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/youtube.png">
+                <p> Youtube </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/figma.png">
+                <p> Figma </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/microsoft.png">
+                <p> Microsoft </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/google.png">
+                <p> Google </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/link.png">
+                <p> Link </p>
+            </div>
+             <div class="linkbox">
+                <img src="images/icons/github.png">
+                <p> Github </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/instagram.png">
+                <p> Instagram </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/linkedin.png">
+                <p> linkedin </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/youtube.png">
+                <p> Youtube </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/figma.png">
+                <p> Figma </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/microsoft.png">
+                <p> Microsoft </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/google.png">
+                <p> Google </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/link.png">
+                <p> Link </p>
+            </div>
+             <div class="linkbox">
+                <img src="images/icons/github.png">
+                <p> Github </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/instagram.png">
+                <p> Instagram </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/linkedin.png">
+                <p> linkedin </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/youtube.png">
+                <p> Youtube </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/figma.png">
+                <p> Figma </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/microsoft.png">
+                <p> Microsoft </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/google.png">
+                <p> Google </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/link.png">
+                <p> Link </p>
+            </div>
+             <div class="linkbox">
+                <img src="images/icons/github.png">
+                <p> Github </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/instagram.png">
+                <p> Instagram </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/linkedin.png">
+                <p> linkedin </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/youtube.png">
+                <p> Youtube </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/figma.png">
+                <p> Figma </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/microsoft.png">
+                <p> Microsoft </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/google.png">
+                <p> Google </p>
+            </div>
+            <div class="linkbox">
+                <img src="images/icons/link.png">
+                <p> Link </p>
+            </div>
+            <!-- End of Items -->
+        </div>
+    </div>
+
+    <!-- Floating Add Button -->
+    <div class="floating-button">
+        <img src="images/app/add.png" alt="Add New" id="btnAdd">
+    </div>
+
+    <!-- Script -->
+    <script>
+        // Searchbar
+        txtSearch.addEventListener('input', ()=>{
+            console.log(txtSearch.value.trim().toLowerCase());
+        });
+
+        // Prevent right click
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+    </script>
+</body>
+</html>
