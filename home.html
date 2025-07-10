@@ -19,7 +19,7 @@
         <div id="progressBar"></div>
     </div>
     
-    <!-- Dialog Edit -->
+    <!-- Dialog Add/Edit -->
     <div id="dlgAddEdit">
         <div>
             <img id="dlgAddEditCloseBtn" src="images/app/close.png" title="close">
@@ -30,9 +30,9 @@
             <label>Link</label>
             <input type="text" id="txtLink">
             <div>
-                <button id="dlgDelete"> Delete </button>
-                <button id="dlgCancel"> Cancel </button>
-                <button id="dlgSave"> Save </button>
+                <button id="dlgAddEditDeleteBtn"> Delete </button>
+                <button id="dlgAddEditCancelBtn"> Cancel </button>
+                <button id="dlgAddEditSaveBtn"> Save </button>
             </div>
         </div>
     </div>
@@ -350,9 +350,20 @@
     <script>
 
         // Button Add Item
-        btnAdd.addEventListener('click', ()=>{
-            alert('add');
+        btnAdd.addEventListener('click', ()=> {
+            dlgAddEdit.style.display = "flex"; 
+            //dlgButtonAddOrEdit('add'); 
+            dlgEditIcon.src = 'images/icons/link.png';
+            txtName.focus();
+            txtName.value = '';
+            txtLink.value = '';
         });
+        
+        // Dialog Add/Edit - Cancel Button
+        dlgAddEditCancelBtn.addEventListener('click', function(){ dlgAddEdit.style.display = "none"; });
+        dlgAddEditCloseBtn.addEventListener('click', function(){ dlgAddEdit.style.display = "none"; });
+        dlgAddEditDeleteBtn.addEventListener('click', function(){ alert('Delete'); });
+        dlgAddEditSaveBtn.addEventListener('click', function(){ alert('Save'); });
 
         // Image Search
         var isDisplaySearchBox = true;

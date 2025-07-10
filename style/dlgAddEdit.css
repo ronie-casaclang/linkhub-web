@@ -78,14 +78,14 @@
 }
 #dlgAddEdit > div > div > button:hover { opacity: 75%;}
 #dlgAddEdit > div > div > button:active { opacity: 50%;}
-#dlgAddEdit > div > div > #dlgCancel { 
+#dlgAddEdit > div > div > #dlgAddEditCancelBtn { 
     background-color: var(--button-negative);
     color: var(--color);
 }
-#dlgAddEdit > div > div > #dlgDelete {
+#dlgAddEdit > div > div > #dlgAddEditDeleteBtn {
     display: none;
     background-color: var(--button-delete);
 }
-#dlgAddEdit > div > div > #dlgSave { 
+#dlgAddEdit > div > div > #dlgAddEditSaveBtn { 
     background-color: var(--button-positive);
 }
