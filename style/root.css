@@ -9,7 +9,7 @@
     --button-delete: rgb(246, 25, 17);
     --link: #0000ff;
     --color: black;
-    --border: black;
+    --border: gray;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -18,7 +18,6 @@
         --dialog-bg: rgba(181, 181, 181, 0.2);
         --link: dodgerblue;
         --color: white;
-        --border: white;
         --button-negative: rgb(44, 44, 44);
     }
 }

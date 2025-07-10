@@ -30,6 +30,7 @@ header > div > .searchbox {
     flex-direction: row;
     align-items: center;
     border: 1px solid var(--border);
+    border: 1px solid gray;
     padding-left: 10px;
     border-radius: 5px;
     box-sizing: border-box;
@@ -71,12 +72,12 @@ header > div > .logobox > #search {
 header > div > .logobox > .icons {
     width: 40px;
     height: 40px;
-    padding: 1px;
+    padding: 2px;
     box-sizing: border-box;
     border-radius: 50%;
-    padding: 5px;
 }
-header > div > .logobox > .icons:hover { background-color: rgb(198, 226, 255);}
+header > div > .logobox > .icons:hover { opacity: 75%; }
+header > div > .logobox > .icons:active { opacity: 50%; }
 
 
 /* Mobile Phone */
