@@ -350,7 +350,7 @@
 
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-        import { getDatabase, ref, push, get } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
+        import { getDatabase, ref, push, get, set } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
 
         // Web App Firebase configuration
         const firebaseConfig = {
@@ -406,9 +406,62 @@
                 });
         }
 
+        // Create or Add
+        function addNewLink(imgSrc, linkName, linkUrl) {
+            
+            const newItemRef = push(itemsRef);
+            set(newItemRef, {
+                id: newItemRef.key, // Get the auto-generated key
+                icon: imgSrc,
+                name: linkName,
+                link: linkUrl,
+                date: getFormattedTimestamp()
+            })
+            .then(() => {
+                console.log("Item added successfully!");
+                fetchAllItems('');
+            })
+            .catch((error) => {
+                console.error("Error adding item:", error);
+                alert("Failed to add item.");
+            });
+        }
+
+
+        //======================================================== Events
+
+
         // Searchbar
         txtSearch.addEventListener('input', ()=>{
             fetchAllItems(txtSearch.value.trim().toLowerCase());
+        });
+
+
+        // Add or Update
+        dlgAddEditSaveBtn.addEventListener('click', function(){  
+            const imgSrc = defineIcon(txtLink.value);
+            const linkName = txtName.value;
+            const linkURL = txtLink.value;
+            
+            if (linkName.trim() === "" || linkURL.trim() === "") {
+                alert("Please fill in all fields.");
+                return;
+            } else {
+                // Add new item
+                if(dlgAddEditSaveBtn.innerText === 'Save'){
+                    alert(imgSrc + '\n' + linkName + '\n' + linkURL);
+                    loadingDisplay(true);
+                    addNewLink(imgSrc, linkName, linkURL);
+                    dlgAddEdit.style.display = "none"; 
+                }
+                // Update an item
+                else if(dlgAddEditSaveBtn.innerText === 'Update'){
+                    const txtItemId = document.getElementById("txtItemId").value.trim();
+                    loadingDisplay(true);
+                    //updateItem(txtItemId, imgSrc, linkName, linkURL);
+                    dlgAddEdit.style.display = "none"; 
+                }
+            }
         });
     </script>
 
@@ -461,7 +514,35 @@
                 default: return 'images/icons/link.png';
             }
         }
+
+        
+        // define an icon from supported img source
+        function defineIcon(url) {
+            const iconSupported = ['facebook', 'youtube', 'google', 'linkedin', 'microsoft', 'github', 'figma', 'instagram'];
+            const trimmedUrl = url.replace(/^https?:\/\//, '');
+            const parts = trimmedUrl.split(/[./]+/);
+
+            for (let part of parts) if (iconSupported.includes(part.toLowerCase())) return part;
+            return 'link';
+        }
+
+        // Get date format as 2025-06-23 18:47:12.123
+        function getFormattedTimestamp() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+            const day = String(now.getDate()).padStart(2, '0');
+
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const milliseconds = String(now.getMilliseconds()).padStart(3, '0');
+
+            return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}`;
+        }
+
     </script>
+    
     <script>
 
         // Button Add Item
@@ -478,7 +559,7 @@
         dlgAddEditCancelBtn.addEventListener('click', function(){ dlgAddEdit.style.display = "none"; });
         dlgAddEditCloseBtn.addEventListener('click', function(){ dlgAddEdit.style.display = "none"; });
         dlgAddEditDeleteBtn.addEventListener('click', function(){ alert('Delete'); });
-        dlgAddEditSaveBtn.addEventListener('click', function(){ alert('Save'); });
+        //dlgAddEditSaveBtn.addEventListener('click', function(){ btnSave_clicked(); });
 
         // Loading Screen
         function loadingDisplay(result){
@@ -491,6 +572,5 @@
             e.preventDefault();
         });
     </script>
-    <script src="script/linkItems.js"></script>
 </body>
 </html>
