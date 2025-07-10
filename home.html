@@ -370,15 +370,6 @@
         dlgAddEditDeleteBtn.addEventListener('click', function(){ alert('Delete'); });
         dlgAddEditSaveBtn.addEventListener('click', function(){ alert('Save'); });
 
-        // Image Search
-        var isDisplaySearchBox = true;
-        imgSearch.addEventListener('click', ()=>{
-            var searchbox = document.querySelector('.searchbox');
-            if (isDisplaySearchBox) searchbox.style.display = 'flex';
-            else searchbox.style.display = 'none';
-            isDisplaySearchBox = !isDisplaySearchBox;
-        });
-
         // Searchbar
         txtSearch.addEventListener('input', ()=>{
             console.log(txtSearch.value.trim().toLowerCase());

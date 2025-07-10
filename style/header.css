@@ -89,5 +89,5 @@ header > div > .logobox > .icons:active { opacity: 50%; }
     }
     header > div > .logobox > #imgSearch { display: block; }
     header > div > .logobox > .icons { padding: 5px; }
-    header > div > .searchbox { width: 100%; display: none; }
+    header > div > .searchbox { width: 100%; }
 }
