@@ -4,7 +4,8 @@ header{
     height: fit-content;
     padding: var(--padding);
     background-color: var(--background);
-    box-shadow: 0px 2px 5px rgba(225, 225, 225, 0.5);
+    /*box-shadow: 0px 2px 5px rgba(225, 225, 225, 0.5);*/
+    border-bottom: 0.5px solid var(--border);
     display: flex;
     justify-content: center;
     box-sizing: border-box;
@@ -18,7 +19,7 @@ header > div {
     justify-content: space-between;
     align-items: center;
     column-gap: 15px;
-    row-gap: 5px;
+    row-gap: 10px;
 }
 
 
@@ -63,10 +64,10 @@ header > div > .logobox > #logo {
     height: 40px;
     margin: 0;
 }
-header > div > .logobox > #profile {
+header > div > .logobox > #imgProfile {
     display: block;
 }
-header > div > .logobox > #search {
+header > div > .logobox > #imgSearch {
     display: none;
 }
 header > div > .logobox > .icons {
@@ -86,7 +87,7 @@ header > div > .logobox > .icons:active { opacity: 50%; }
     header > div > .logobox {
         flex-direction: row-reverse;
     }
-    header > div > .logobox > #search { display: block; }
+    header > div > .logobox > #imgSearch { display: block; }
     header > div > .logobox > .icons { padding: 5px; }
     header > div > .searchbox { width: 100%; display: none; }
 }

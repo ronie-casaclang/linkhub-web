@@ -57,9 +57,9 @@
     <header>
         <div>
             <div class="logobox">
-                <img id="search" class="icons" src="images/app/search.png" alt="search">
+                <img id="imgSearch" class="icons" src="images/app/search.png" alt="search">
                 <img id="logo" src="images/app/logo.png" alt="LinkHub">
-                <img id="profile" class="icons" src="images/app/account.png" alt="profile" title="Account">
+                <img id="imgProfile" class="icons" src="images/app/account.png" alt="profile" title="Account">
             </div>
             <div class="searchbox">
                 <img src="images/app/search.png" alt="search" srcset="">
@@ -348,6 +348,21 @@
 
     <!-- Script -->
     <script>
+
+        // Button Add Item
+        btnAdd.addEventListener('click', ()=>{
+            alert('add');
+        });
+
+        // Image Search
+        var isDisplaySearchBox = true;
+        imgSearch.addEventListener('click', ()=>{
+            var searchbox = document.querySelector('.searchbox');
+            if (isDisplaySearchBox) searchbox.style.display = 'flex';
+            else searchbox.style.display = 'none';
+            isDisplaySearchBox = !isDisplaySearchBox;
+        });
+
         // Searchbar
         txtSearch.addEventListener('input', ()=>{
             console.log(txtSearch.value.trim().toLowerCase());
