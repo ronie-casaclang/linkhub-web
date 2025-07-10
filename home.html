@@ -71,12 +71,11 @@
     <!-- Main -->
     <div class="main">
         <div class="link-main">
+            <!-- Link Items
             <div class="linkbox">
                 <img src="images/icons/facebook.png">
                 <p> My Facebook Account </p>
             </div>
-
-            <!-- Item / Content -->
              <div class="linkbox">
                 <img src="images/icons/github.png">
                 <p> Github </p>
@@ -337,7 +336,7 @@
                 <img src="images/icons/link.png">
                 <p> Link </p>
             </div>
-            <!-- End of Items -->
+            -->
         </div>
     </div>
 
@@ -348,6 +347,12 @@
 
     <!-- Script -->
     <script>
+
+        // Page Loading Event
+        document.addEventListener("DOMContentLoaded", (event) => {
+            loadLinks('id1', 'github', 'Github Portfolio', 'https://ronie-casaclang.github.io');
+            loadLinks('id2', 'facebook', 'Facebook Account', 'https://ronie-casaclang.github.io');
+        });
 
         // Button Add Item
         btnAdd.addEventListener('click', ()=> {
@@ -384,5 +389,6 @@
             e.preventDefault();
         });
     </script>
+    <script src="script/linkItems.js"></script>
 </body>
 </html>
