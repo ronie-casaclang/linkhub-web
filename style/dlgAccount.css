@@ -9,7 +9,7 @@
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    /*display: none;*/
+    display: none;
 }
 #dlgAccount > div {
     padding: 20px;

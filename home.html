@@ -25,7 +25,7 @@
     <div id="dlgAccount">
         <div>
             <img id="dlgAccountCloseBtn" src="images/app/close.png" title="close">
-            <img id="dlgAccountDP" src="images/app/img_profile.png">
+            <img id="dlgAccountDP" src="images/app/img-profile.png">
             <p id="dlgAccountEmail"> sample@gmail.com </p>
             <button id="dlgAccountLogout"> Logout </button>
         </div>
@@ -72,7 +72,7 @@
             <div class="logobox">
                 <img id="imgSearch" class="icons" src="images/app/search.png" alt="search">
                 <img id="logo" src="images/app/logo.png" alt="LinkHub">
-                <img id="imgProfile" class="icons" src="images/app/account.png" alt="profile" title="Account">
+                <img id="imgProfile" class="icons" src="images/app/img-profile.png" alt="profile" title="Account">
             </div>
             <div class="searchbox">
                 <img src="images/app/search.png" alt="search" srcset="">
@@ -697,6 +697,12 @@
             dlgAddEdit.style.display = "none";
         }
 
+        // Profile or Account
+        function btnProfile_clicked(email){
+            dlgAccountEmail.innerText = email;
+            dlgAccount.style.display = "flex";
+        }
+
         // Hide Dialogs
         function hideDialogs(){
             dlgView.style.display = "none";
@@ -717,6 +723,9 @@
 
         // Searchbar
         txtSearch.addEventListener('input', ()=>{ fetchAllItems(txtSearch.value.trim().toLowerCase())});
+        
+        // Account or Profile
+        imgProfile.addEventListener('click', ()=> { btnProfile_clicked('sample')});
 
         // Add link button
         btnAdd.addEventListener('click', ()=> {btnAdd_clicked()});
@@ -734,7 +743,7 @@
         
         // Dialog Account
         dlgAccountCloseBtn.addEventListener('click', function(){ dlgAccount.style.display = "none"});
-        dlgAccountLogout.addEventListener('click', function(){ dlgAccount.style.display = "none"});
+        dlgAccountLogout.addEventListener('click', function(){ alert('logout')});
         
     </script>
 </body>

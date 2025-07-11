@@ -84,10 +84,6 @@ header > div > .logobox > .icons:active { opacity: 50%; }
 /* Mobile Phone */
 @media only screen and (max-width: 600px){
     header > div { flex-direction: column; }
-    header > div > .logobox {
-        flex-direction: row-reverse;
-    }
-    header > div > .logobox > #imgSearch { display: block; }
     header > div > .logobox > .icons { padding: 5px; }
     header > div > .searchbox { width: 100%; }
 }
