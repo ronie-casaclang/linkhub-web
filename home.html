@@ -352,7 +352,7 @@
 
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-        import { getDatabase, ref, push, get, set, update } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
+        import { getDatabase, ref, push, get, set, update, remove } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
 
         // Web App Firebase configuration
         const firebaseConfig = {
@@ -452,6 +452,27 @@
                     alert("Error checking item existence.");
                 });
         }  
+
+        // Delete or Remove
+        function deleteLink(itemId) {
+            const itemRef = ref(database, `linkhub/items/${itemId}`); // Reference to the specific item
+            get(itemRef) // First, check if the item exists before deleting
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        remove(itemRef) // If the item exists, delete it
+                        .then(() => {
+                            console.log("Item deleted successfully!");
+                            fetchAllItems('');
+                        })
+                        .catch((error) => {
+                            alert("Failed to delete item.");
+                        });
+                    } else alert("Item does not exist.");
+                })
+                .catch((error) => {
+                    alert("Error retrieving item: ", error);
+                });
+        }
 
         //======================================================== Functions
         
@@ -613,7 +634,7 @@
             //window.location.href = lblLink.innerText;
         };
 
-        // Edit LINK
+        // Edit Link
         function btnEdit_clicked(itemId, imgSrc, linkName, linkURL) {
             dlgView.style.display = "none";
             dlgAddEdit.style.display = "flex";
@@ -629,6 +650,12 @@
             dlgAddEditSaveBtn.innerText = "Update";
         };
 
+        // Delete Link
+        function btnDelete_clicked() {
+            progressbar_show(true);
+            deleteLink(txtItemId.value.trim());
+            dlgAddEdit.style.display = "none";
+        }
 
         //======================================================== Events
 
@@ -648,7 +675,7 @@
         dlgAddEditCancelBtn.addEventListener('click', function(){ dlgAddEdit.style.display = "none"});
         dlgAddEditCloseBtn.addEventListener('click', function(){ dlgAddEdit.style.display = "none"});
         dlgAddEditSaveBtn.addEventListener('click', ()=>{ btnAddEdit_clicked()});
-        dlgAddEditDeleteBtn.addEventListener('click', function(){ alert('Delete')});
+        dlgAddEditDeleteBtn.addEventListener('click', function(){ btnDelete_clicked()});
 
         // Dialog View
         dlgViewClose.addEventListener('click', function(){ dlgView.style.display = "none"});
