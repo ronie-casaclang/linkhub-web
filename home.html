@@ -12,12 +12,23 @@
     <link rel="stylesheet" href="style/progressbar.css">
     <link rel="stylesheet" href="style/dlgAddEdit.css">
     <link rel="stylesheet" href="style/dlgView.css">
+    <link rel="stylesheet" href="style/dlgAccount.css">
 </head>
 <body>
     
     <!-- Dialog ProgressBar -->
     <div id="dlgProgressBar">
         <div id="progressBar"></div>
+    </div>
+    
+    <!-- Dialog Account -->
+    <div id="dlgAccount">
+        <div>
+            <img id="dlgAccountCloseBtn" src="images/app/close.png" title="close">
+            <img id="dlgAccountDP" src="images/app/img_profile.png">
+            <p id="dlgAccountEmail"> sample@gmail.com </p>
+            <button id="dlgAccountLogout"> Logout </button>
+        </div>
     </div>
     
     <!-- Dialog Add/Edit -->
@@ -720,6 +731,10 @@
         dlgViewClose.addEventListener('click', function(){ dlgView.style.display = "none"});
         dlgViewCopy.addEventListener('click', function(){ copyLinkToClipboard(dlgViewLink.innerText)});
         dlgViewLink.addEventListener('click', function(){ openLink()});
+        
+        // Dialog Account
+        dlgAccountCloseBtn.addEventListener('click', function(){ dlgAccount.style.display = "none"});
+        dlgAccountLogout.addEventListener('click', function(){ dlgAccount.style.display = "none"});
         
     </script>
 </body>
