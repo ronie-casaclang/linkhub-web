@@ -86,6 +86,33 @@ body > .main > .link-main {
 .floating-button > img:active { background-color: rgba(19, 87, 247, 0.693); }
 
 
+/* Toast Message */
+.toast-msg{
+    max-width: 200px;
+    padding: 10px 20px 10px 15px;
+    border-radius: 5px;
+    background-color: rgba(129, 129, 129, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 7px;
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 99;
+    display: none;
+}
+.toast-msg > img {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+}
+.toast-msg > p {
+    margin: 0;
+    color: white;
+}
+
 /* Mobile Phone */
 @media only screen and (max-width: 600px){
     

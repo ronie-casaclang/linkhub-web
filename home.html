@@ -346,6 +346,12 @@
     <div class="floating-button">
         <img src="images/app/add.png" alt="Add New" id="btnAdd">
     </div>
+    
+    <!-- Toast Message -->
+    <div class="toast-msg" id="toastMsgBox">
+        <img src="images/app/saved.png" alt="" srcset="" id="toastIcon">
+        <p id="toastMessage"> Saved </p>
+    </div>
 
     <!-- Script -->
     <script type="module">
@@ -398,7 +404,10 @@
                         });
 
                         progressbar_show(false);
-                    } else console.log('No data found.');
+                    } else {
+                        console.log('No data found.');
+                        toast_show('failed', 'Empty list');
+                    }
                 })
                 .catch((error) => {
                     console.error('Error fetching data:', error);
@@ -417,12 +426,13 @@
                 date: getFormattedTimestamp()
             })
             .then(() => {
+                toast_show('saved', 'Link added');
                 console.log("Item added successfully!");
                 fetchAllItems('');
             })
             .catch((error) => {
+                toast_show('failed', 'Failed to add link');
                 console.error("Error adding item:", error);
-                alert("Failed to add item.");
             });
         }
 
@@ -439,13 +449,15 @@
                             date: getFormattedTimestamp()
                         })
                         .then(() => {
+                            toast_show('saved', 'Link updated');
                             console.log("Item updated successfully!");
                             fetchAllItems('');
                         })
                         .catch((error) => {
-                            alert("Failed to update item.");
+                            toast_show('failed', 'Update failed');
+                            console.log("Failed to update item.");
                         });
-                    } else alert("Item does not exist.");
+                    } else console.log("Item does not exist.");
                 })
                 .catch((error) => {
                     console.error("Error retrieving item:", error);
@@ -461,16 +473,18 @@
                     if (snapshot.exists()) {
                         remove(itemRef) // If the item exists, delete it
                         .then(() => {
+                            toast_show('saved', 'Link deleted');
                             console.log("Item deleted successfully!");
                             fetchAllItems('');
                         })
                         .catch((error) => {
-                            alert("Failed to delete item.");
+                            toast_show('failed', 'Failed to delete');
+                            console.log("Failed to delete item.");
                         });
-                    } else alert("Item does not exist.");
+                    } else console.log("Item does not exist.");
                 })
                 .catch((error) => {
-                    alert("Error retrieving item: ", error);
+                    console.log("Error retrieving item: ", error);
                 });
         }
 
@@ -545,6 +559,20 @@
             return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}`;
         }
         
+        // Toast Message
+        function toast_show(icon, msg){
+            switch (icon){
+                case 'saved': toastIcon.src = "images/app/saved.png"; break;
+                case 'failed': toastIcon.src = "images/app/failed.png"; break;
+                case 'copied': toastIcon.src = "images/app/clipboard.png"; break;
+            }
+            toastMessage.innerText = msg;
+            toastMsgBox.style.display = "flex";
+            setTimeout(()=> {
+                toastMsgBox.style.display = "none";
+            }, 2000);
+        }
+        
         // Loading Screen
         function progressbar_show(result){
             if (result) dlgProgressBar.style.display = 'flex';
@@ -616,9 +644,10 @@
             try {
                 const successful = document.execCommand('copy');
                 const msg = successful ? 'successful' : 'unsuccessful';
-                if (msg === "successful") alert('Copy to clipboard.');
+                if (msg === "successful") toast_show('copied', 'Copied link');
             } catch (err) {
-                alert('Failed to copy text: ', err);
+                toast_show('failed', 'Failed copy');
+                console.log('Failed to copy text: ', err);
             } finally {
                 document.body.removeChild(textArea);
                 dlgView.style.display = "none";

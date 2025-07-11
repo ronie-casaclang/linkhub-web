@@ -15,6 +15,7 @@
 @media (prefers-color-scheme: dark) {
     :root{
         --background: rgb(17, 17, 17);
+        --toast-bg: rgba(69, 69, 69, 0.95);
         --dialog-bg: rgba(181, 181, 181, 0.2);
         --link: dodgerblue;
         --color: white;
