@@ -21,6 +21,11 @@
     flex-direction: column;
     box-sizing: border-box;
 }
+#dlgAddEdit > div > p {
+    color: var(--color);
+    margin: 10px 0px 15px;
+    font-size: 18px;
+}
 #dlgAddEdit > div > img {
     margin: 0;
     width: 70px;
@@ -38,6 +43,7 @@
     align-self: flex-end;
     border-radius: 50%;
     box-sizing: border-box;
+    position: absolute;
 }
 #dlgAddEdit > div > #dlgAddEditCloseBtn:hover { opacity: 75%;}
 #dlgAddEdit > div > #dlgAddEditCloseBtn:active { opacity: 50%;}
@@ -88,4 +94,10 @@
 }
 #dlgAddEdit > div > div > #dlgAddEditSaveBtn { 
     background-color: var(--button-positive);
+}
+
+
+/* Mobile Phone */
+@media only screen and (max-width: 600px){
+    #dlgAddEdit > div { width: 300px; }
 }

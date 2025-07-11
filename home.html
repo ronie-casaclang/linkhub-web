@@ -24,6 +24,7 @@
         <div>
             <img id="dlgAddEditCloseBtn" src="images/app/close.png" title="close">
             <img id="dlgEditIcon" src="images/icons/link.png" title="close">
+            <p id="dlgAddLabel"> Add Link </p>
             <input type="text" id="txtItemId" style="display: none;">
             <label>Label</label>
             <input type="text" id="txtName">
@@ -363,15 +364,12 @@
             appId: "1:479799357780:web:20c7d674b907e75e4d58c1"
         };
 
-        // Initialize Firebase
+        // Initialize
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
         const itemsRef = ref(database, 'linkhub/items');
 
-        // Page Loading Event
-        document.addEventListener("DOMContentLoaded", (event) => {
-            fetchAllItems(txtSearch.value.trim().toLowerCase());
-        });
+        //======================================================== Firebase
 
         // Fetch items
         function fetchAllItems(keyword) {
@@ -398,7 +396,7 @@
                                 addLinkItem(item.key, item.icon, item.name, item.link);
                         });
 
-                        loadingDisplay(false);
+                        progressbar_show(false);
                     } else console.log('No data found.');
                 })
                 .catch((error) => {
@@ -427,18 +425,27 @@
             });
         }
 
+        //======================================================== Functions
+        
+        // Loading Screen
+        function progressbar_show(result){
+            if (result) dlgProgressBar.style.display = 'flex';
+            else dlgProgressBar.style.display = 'none';
+        }
 
-        //======================================================== Events
+        // Add Link
+        function btnAdd_clicked() {
+            dlgAddEdit.style.display = "flex"; 
+            //dlgButtonAddOrEdit('add'); 
+            dlgEditIcon.src = 'images/icons/link.png';
+            txtName.focus();
+            txtName.value = '';
+            txtLink.value = '';
+            dlgEditIcon.style.display = 'none';
+        };
 
-
-        // Searchbar
-        txtSearch.addEventListener('input', ()=>{
-            fetchAllItems(txtSearch.value.trim().toLowerCase());
-        });
-
-
-        // Add or Update
-        dlgAddEditSaveBtn.addEventListener('click', function(){  
+        // Add or Edit
+        function btnAddEdit_clicked(){  
             const imgSrc = defineIcon(txtLink.value);
             const linkName = txtName.value;
             const linkURL = txtLink.value;
@@ -449,20 +456,40 @@
             } else {
                 // Add new item
                 if(dlgAddEditSaveBtn.innerText === 'Save'){
-                    alert(imgSrc + '\n' + linkName + '\n' + linkURL);
-                    loadingDisplay(true);
+                    progressbar_show(true);
                     addNewLink(imgSrc, linkName, linkURL);
                     dlgAddEdit.style.display = "none"; 
                 }
                 // Update an item
                 else if(dlgAddEditSaveBtn.innerText === 'Update'){
                     const txtItemId = document.getElementById("txtItemId").value.trim();
-                    loadingDisplay(true);
+                    progressbar_show(true);
                     //updateItem(txtItemId, imgSrc, linkName, linkURL);
                     dlgAddEdit.style.display = "none"; 
                 }
             }
-        });
+        };
+
+        //======================================================== Events
+
+        // Page Loading Event
+        document.addEventListener("DOMContentLoaded", ()=>{ fetchAllItems(txtSearch.value.trim().toLowerCase())});
+
+        // Prevent right click
+        document.addEventListener('contextmenu', (e)=> { e.preventDefault()});
+
+        // Searchbar
+        txtSearch.addEventListener('input', ()=>{ fetchAllItems(txtSearch.value.trim().toLowerCase())});
+
+        // Add link button
+        btnAdd.addEventListener('click', ()=> {btnAdd_clicked()});
+
+        // Dialog Add/Edit
+        dlgAddEditCancelBtn.addEventListener('click', function(){ dlgAddEdit.style.display = "none"});
+        dlgAddEditCloseBtn.addEventListener('click', function(){ dlgAddEdit.style.display = "none"});
+        dlgAddEditSaveBtn.addEventListener('click', ()=>{ btnAddEdit_clicked()});
+        dlgAddEditDeleteBtn.addEventListener('click', function(){ alert('Delete')});
+        
     </script>
 
     <script>
@@ -515,7 +542,6 @@
             }
         }
 
-        
         // define an icon from supported img source
         function defineIcon(url) {
             const iconSupported = ['facebook', 'youtube', 'google', 'linkedin', 'microsoft', 'github', 'figma', 'instagram'];
@@ -543,34 +569,5 @@
 
     </script>
     
-    <script>
-
-        // Button Add Item
-        btnAdd.addEventListener('click', ()=> {
-            dlgAddEdit.style.display = "flex"; 
-            //dlgButtonAddOrEdit('add'); 
-            dlgEditIcon.src = 'images/icons/link.png';
-            txtName.focus();
-            txtName.value = '';
-            txtLink.value = '';
-        });
-        
-        // Dialog Add/Edit - Cancel Button
-        dlgAddEditCancelBtn.addEventListener('click', function(){ dlgAddEdit.style.display = "none"; });
-        dlgAddEditCloseBtn.addEventListener('click', function(){ dlgAddEdit.style.display = "none"; });
-        dlgAddEditDeleteBtn.addEventListener('click', function(){ alert('Delete'); });
-        //dlgAddEditSaveBtn.addEventListener('click', function(){ btnSave_clicked(); });
-
-        // Loading Screen
-        function loadingDisplay(result){
-            if (result) dlgProgressBar.style.display = 'flex';
-            else dlgProgressBar.style.display = 'none';
-        }
-
-        // Prevent right click
-        document.addEventListener('contextmenu', function (e) {
-            e.preventDefault();
-        });
-    </script>
 </body>
 </html>
