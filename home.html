@@ -639,7 +639,7 @@
             dlgView.style.display = "none";
             dlgAddEdit.style.display = "flex";
             dlgEditIcon.src = getIcon(imgSrc);
-            txtName.focus();
+            //txtName.focus();
             txtName.value = linkName;
             txtLink.value = linkURL;
             txtItemId.value = itemId;
@@ -657,6 +657,12 @@
             dlgAddEdit.style.display = "none";
         }
 
+        // Hide Dialogs
+        function hideDialogs(){
+            dlgView.style.display = "none";
+            dlgAddEdit.style.display = "none";
+        }
+
         //======================================================== Events
 
         // Page Loading Event
@@ -664,6 +670,10 @@
 
         // Prevent right click
         document.addEventListener('contextmenu', (e)=> { e.preventDefault()});
+        
+        // Back button click
+        history.pushState("","", location.href);
+        window.addEventListener('popstate', (e)=> { hideDialogs()});
 
         // Searchbar
         txtSearch.addEventListener('input', ()=>{ fetchAllItems(txtSearch.value.trim().toLowerCase())});
