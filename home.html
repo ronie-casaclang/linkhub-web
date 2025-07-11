@@ -614,12 +614,6 @@
             }, 2000);
         }
         
-        // Loading Screen
-        function progressbar_show(result){
-            if (result) dlgProgressBar.style.display = 'flex';
-            else dlgProgressBar.style.display = 'none';
-        }
-
         // Add Link
         function btnAdd_clicked() {
             dlgAddEdit.style.display = "flex";
@@ -770,5 +764,6 @@
         dlgAccountLogout.addEventListener('click', function(){ logoutUser()});
         
     </script>
+    <script src="script/progressbar.js"></script>
 </body>
 </html>
