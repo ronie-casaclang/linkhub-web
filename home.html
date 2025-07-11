@@ -351,7 +351,7 @@
 
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-        import { getDatabase, ref, push, get, set } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
+        import { getDatabase, ref, push, get, set, update } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
 
         // Web App Firebase configuration
         const firebaseConfig = {
@@ -424,6 +424,33 @@
                 alert("Failed to add item.");
             });
         }
+
+        // Update or Edit
+        function updateLink(itemId, icon, name, link) {
+            const itemRef = ref(database, `linkhub/items/${itemId}`);
+            get(itemRef) // First, check if the item exists before updating
+                .then((snapshot) => {
+                    if (snapshot.exists()) { // If the item exists, update it
+                        update(itemRef, {
+                            icon: icon,
+                            name: name,
+                            link: link,
+                            date: getFormattedTimestamp()
+                        })
+                        .then(() => {
+                            console.log("Item updated successfully!");
+                            fetchAllItems('');
+                        })
+                        .catch((error) => {
+                            alert("Failed to update item.");
+                        });
+                    } else alert("Item does not exist.");
+                })
+                .catch((error) => {
+                    console.error("Error retrieving item:", error);
+                    alert("Error checking item existence.");
+                });
+        }  
 
         //======================================================== Functions
         
@@ -504,12 +531,12 @@
 
         // Add Link
         function btnAdd_clicked() {
-            dlgAddEdit.style.display = "flex"; 
-            //dlgButtonAddOrEdit('add'); 
+            dlgAddEdit.style.display = "flex";
             dlgEditIcon.src = 'images/icons/link.png';
             txtName.focus();
             txtName.value = '';
             txtLink.value = '';
+            txtItemId.value = '';
             dlgEditIcon.style.display = 'none';
             dlgAddLabel.style.display = 'flex';
             dlgAddEditDeleteBtn.style.display = 'none';
@@ -519,6 +546,7 @@
 
         // Dialog popup - Add or Edit
         function btnAddEdit_clicked(){  
+            const txtItemId = document.getElementById("txtItemId").value.trim();
             const imgSrc = defineIcon(txtLink.value);
             const linkName = txtName.value;
             const linkURL = txtLink.value;
@@ -528,16 +556,15 @@
                 return;
             } else {
                 // Add new item
-                if(dlgAddEditSaveBtn.innerText === 'Save'){
+                if(dlgAddEditSaveBtn.innerText === 'Save' && txtItemId === ''){
                     progressbar_show(true);
                     addNewLink(imgSrc, linkName, linkURL);
                     dlgAddEdit.style.display = "none"; 
                 }
                 // Update an item
-                else if(dlgAddEditSaveBtn.innerText === 'Update'){
-                    const txtItemId = document.getElementById("txtItemId").value.trim();
+                else if(dlgAddEditSaveBtn.innerText === 'Update' && txtItemId !== ''){
                     progressbar_show(true);
-                    //updateItem(itemId, imgSrc, linkName, linkURL);
+                    updateLink(txtItemId, imgSrc, linkName, linkURL);
                     dlgAddEdit.style.display = "none"; 
                 }
             }
@@ -593,6 +620,7 @@
             txtName.focus();
             txtName.value = linkName;
             txtLink.value = linkURL;
+            txtItemId.value = itemId;
             dlgEditIcon.style.display = 'flex';
             dlgAddLabel.style.display = 'none';
             dlgAddEditDeleteBtn.style.display = 'block';
