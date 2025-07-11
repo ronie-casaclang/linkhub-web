@@ -369,6 +369,7 @@
 
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
         import { getDatabase, ref, push, get, set, update, remove } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
 
         // Web App Firebase configuration
@@ -384,10 +385,26 @@
 
         // Initialize
         const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
         const database = getDatabase(app);
         const itemsRef = ref(database, 'linkhub/items');
 
         //======================================================== Firebase
+
+        // Authenticate
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log("User is signed in: ", user.email);
+                dlgAccountEmail.innerText = user.email;
+
+                // Safe to use database now
+                const dataRef = ref(database, "linkhub/items");
+                get(dataRef).then((snapshot) => {
+                if (snapshot.exists())
+                    console.log(snapshot.val());
+                });
+            } else window.location.href = "login.html";
+        });
 
         // Fetch items
         function fetchAllItems(keyword) {
@@ -697,12 +714,6 @@
             dlgAddEdit.style.display = "none";
         }
 
-        // Profile or Account
-        function btnProfile_clicked(email){
-            dlgAccountEmail.innerText = email;
-            dlgAccount.style.display = "flex";
-        }
-
         // Hide Dialogs
         function hideDialogs(){
             dlgView.style.display = "none";
@@ -725,10 +736,10 @@
         txtSearch.addEventListener('input', ()=>{ fetchAllItems(txtSearch.value.trim().toLowerCase())});
         
         // Account or Profile
-        imgProfile.addEventListener('click', ()=> { btnProfile_clicked('sample')});
+        imgProfile.addEventListener('click', ()=> { dlgAccount.style.display = "flex"});
 
         // Add link button
-        btnAdd.addEventListener('click', ()=> {btnAdd_clicked()});
+        btnAdd.addEventListener('click', ()=> { btnAdd_clicked()});
 
         // Dialog Add/Edit
         dlgAddEditCancelBtn.addEventListener('click', function(){ dlgAddEdit.style.display = "none"});
