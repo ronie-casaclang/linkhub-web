@@ -43,17 +43,57 @@
         </div>
     </div>
 
-    <script>
+    <script type="module">
+
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+        import { getDatabase } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+
+        // Web App Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBWDrx76I3HMdEFy_NGZ9kWGx8HW9Igy-8",
+            authDomain: "myproject-a3e0c.firebaseapp.com",
+            databaseURL: "https://myproject-a3e0c-default-rtdb.firebaseio.com",
+            projectId: "myproject-a3e0c",
+            storageBucket: "myproject-a3e0c.firebasestorage.app",
+            messagingSenderId: "479799357780",
+            appId: "1:479799357780:web:20c7d674b907e75e4d58c1"
+        };
+
+        // Initialize 
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // ============================================= Firebase
+
+        // Authenticate - login
+        function loginUser(auth, email, password) {
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+
+                    // Check if email is verified
+                    if (user.emailVerified) {
+                        alert("Verified Account: Login successful!");
+                        location.href = "home.html";
+                    } else {
+                        alert("Please verify your email before logging in.");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Login failed:", error.message);
+                    alert("Login error: " + error.message);
+                });
+        }
+
+        // ============================================= Events
 
         // Signup handler
         window.handleLogin = function (e) {
             e.preventDefault();
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-            alert(email + '\n' + password);
-            location.href = "home.html";
+            loginUser(auth, email.value, password.value);
         }
     </script>
-    
 </body>
 </html>
