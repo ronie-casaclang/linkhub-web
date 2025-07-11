@@ -369,7 +369,7 @@
 
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
         import { getDatabase, ref, push, get, set, update, remove } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
 
         // Web App Firebase configuration
@@ -391,7 +391,7 @@
 
         //======================================================== Firebase
 
-        // Authenticate
+        // Authenticate - signed in
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 console.log("User is signed in: ", user.email);
@@ -405,6 +405,19 @@
                 });
             } else window.location.href = "login.html";
         });
+
+        // Authenticate - logout
+        function logoutUser() {
+            signOut(auth)
+                .then(() => {
+                    progressbar_show(true);
+                    console.log("User signed out.");
+                    window.location.href = "login.html";
+                })
+                .catch((error) => {
+                    console.error("Logout failed:", error.message);
+                });
+        }
 
         // Fetch items
         function fetchAllItems(keyword) {
@@ -754,7 +767,7 @@
         
         // Dialog Account
         dlgAccountCloseBtn.addEventListener('click', function(){ dlgAccount.style.display = "none"});
-        dlgAccountLogout.addEventListener('click', function(){ alert('logout')});
+        dlgAccountLogout.addEventListener('click', function(){ logoutUser()});
         
     </script>
 </body>
