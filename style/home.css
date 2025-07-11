@@ -146,7 +146,7 @@ body > .main > .link-main {
 }
 #dlgView > div > div > button:hover { opacity: 75%;}
 #dlgView > div > div > button:active { opacity: 50%;}
-#dlgView > div > div > #dlgCopy { background-color: var(--color); color: var(--background); }
+#dlgView > div > div > #dlgViewCopy { background-color: var(--color); color: var(--background); }
 #dlgView > div > div > img {
     width: 24px;
     height: 24px;

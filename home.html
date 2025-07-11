@@ -41,15 +41,15 @@
     <!-- Dialog View -->
     <div id="dlgView">
         <div>
-            <img id="dlgClose" src="images/app/close.png" title="close">
-            <h3 id="lblName"> Name </h3>
+            <img id="dlgViewClose" src="images/app/close.png" title="close">
+            <h3 id="dlgViewName"> Name </h3>
             <div>
-                <img id="dlgIcon" src="images/icons/link.png">
-                <p id="lblLink">www.samplelink.com/sample.only</p>
+                <img id="dlgViewIcon" src="images/icons/link.png">
+                <p id="dlgViewLink" title="Open link">www.samplelink.com/sample.only</p>
             </div>
             <div>
-                <button id="dlgEdit"> Edit </button>
-                <button id="dlgCopy"> Copy Link </button>
+                <button id="dlgViewEdit"> Edit </button>
+                <button id="dlgViewCopy"> Copy Link </button>
             </div>
         </div>
     </div>
@@ -427,73 +427,6 @@
 
         //======================================================== Functions
         
-        // Loading Screen
-        function progressbar_show(result){
-            if (result) dlgProgressBar.style.display = 'flex';
-            else dlgProgressBar.style.display = 'none';
-        }
-
-        // Add Link
-        function btnAdd_clicked() {
-            dlgAddEdit.style.display = "flex"; 
-            //dlgButtonAddOrEdit('add'); 
-            dlgEditIcon.src = 'images/icons/link.png';
-            txtName.focus();
-            txtName.value = '';
-            txtLink.value = '';
-            dlgEditIcon.style.display = 'none';
-        };
-
-        // Add or Edit
-        function btnAddEdit_clicked(){  
-            const imgSrc = defineIcon(txtLink.value);
-            const linkName = txtName.value;
-            const linkURL = txtLink.value;
-            
-            if (linkName.trim() === "" || linkURL.trim() === "") {
-                alert("Please fill in all fields.");
-                return;
-            } else {
-                // Add new item
-                if(dlgAddEditSaveBtn.innerText === 'Save'){
-                    progressbar_show(true);
-                    addNewLink(imgSrc, linkName, linkURL);
-                    dlgAddEdit.style.display = "none"; 
-                }
-                // Update an item
-                else if(dlgAddEditSaveBtn.innerText === 'Update'){
-                    const txtItemId = document.getElementById("txtItemId").value.trim();
-                    progressbar_show(true);
-                    //updateItem(txtItemId, imgSrc, linkName, linkURL);
-                    dlgAddEdit.style.display = "none"; 
-                }
-            }
-        };
-
-        //======================================================== Events
-
-        // Page Loading Event
-        document.addEventListener("DOMContentLoaded", ()=>{ fetchAllItems(txtSearch.value.trim().toLowerCase())});
-
-        // Prevent right click
-        document.addEventListener('contextmenu', (e)=> { e.preventDefault()});
-
-        // Searchbar
-        txtSearch.addEventListener('input', ()=>{ fetchAllItems(txtSearch.value.trim().toLowerCase())});
-
-        // Add link button
-        btnAdd.addEventListener('click', ()=> {btnAdd_clicked()});
-
-        // Dialog Add/Edit
-        dlgAddEditCancelBtn.addEventListener('click', function(){ dlgAddEdit.style.display = "none"});
-        dlgAddEditCloseBtn.addEventListener('click', function(){ dlgAddEdit.style.display = "none"});
-        dlgAddEditSaveBtn.addEventListener('click', ()=>{ btnAddEdit_clicked()});
-        dlgAddEditDeleteBtn.addEventListener('click', function(){ alert('Delete')});
-        
-    </script>
-
-    <script>
-        
         // create link element
         function addLinkItem(itemId, imgSrc, linkName, linkURL){
             var linkbox = document.createElement('div');
@@ -520,11 +453,7 @@
 
             var linksContainer = document.querySelector('.link-main');
             linksContainer.appendChild(linkbox);
-            
-            linkbox.addEventListener('click', function(){
-                //displayDialog(itemId, imgSrc, linkName, linkURL);
-                alert(itemId + '\n' + linkName);
-            });
+            linkbox.addEventListener('click', ()=> { dlgView_clicked(itemId, imgSrc, linkName, linkURL)});
         }
 
         // get icon from supported img source
@@ -566,8 +495,137 @@
 
             return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}`;
         }
+        
+        // Loading Screen
+        function progressbar_show(result){
+            if (result) dlgProgressBar.style.display = 'flex';
+            else dlgProgressBar.style.display = 'none';
+        }
 
+        // Add Link
+        function btnAdd_clicked() {
+            dlgAddEdit.style.display = "flex"; 
+            //dlgButtonAddOrEdit('add'); 
+            dlgEditIcon.src = 'images/icons/link.png';
+            txtName.focus();
+            txtName.value = '';
+            txtLink.value = '';
+            dlgEditIcon.style.display = 'none';
+            dlgAddLabel.style.display = 'flex';
+            dlgAddEditDeleteBtn.style.display = 'none';
+            dlgAddEditCancelBtn.style.display = 'block';
+            dlgAddEditSaveBtn.innerText = "Save";
+        };
+
+        // Dialog popup - Add or Edit
+        function btnAddEdit_clicked(){  
+            const imgSrc = defineIcon(txtLink.value);
+            const linkName = txtName.value;
+            const linkURL = txtLink.value;
+            
+            if (linkName.trim() === "" || linkURL.trim() === "") {
+                alert("Please fill in all fields.");
+                return;
+            } else {
+                // Add new item
+                if(dlgAddEditSaveBtn.innerText === 'Save'){
+                    progressbar_show(true);
+                    addNewLink(imgSrc, linkName, linkURL);
+                    dlgAddEdit.style.display = "none"; 
+                }
+                // Update an item
+                else if(dlgAddEditSaveBtn.innerText === 'Update'){
+                    const txtItemId = document.getElementById("txtItemId").value.trim();
+                    progressbar_show(true);
+                    //updateItem(itemId, imgSrc, linkName, linkURL);
+                    dlgAddEdit.style.display = "none"; 
+                }
+            }
+        };
+
+        // Dialog popup - View
+        function dlgView_clicked(itemId, imgSrc, linkName, linkURL){
+            dlgView.style.display = 'flex';
+            dlgViewLink.innerText = linkURL
+            dlgViewName.innerText = linkName;
+            dlgViewIcon.src = getIcon(imgSrc);
+            dlgViewEdit.addEventListener('click', ()=>{ 
+                btnEdit_clicked(itemId, imgSrc, linkName, linkURL);
+            });
+        }
+
+        // Copy link to clipboard
+        function copyLinkToClipboard(link) {
+            const textArea = document.createElement('textarea');
+            textArea.value = link;
+            textArea.style.position = 'fixed'; // Prevents scrolling
+            textArea.style.opacity = 0; // Makes it invisible
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+                const successful = document.execCommand('copy');
+                const msg = successful ? 'successful' : 'unsuccessful';
+                if (msg === "successful") alert('Copy to clipboard.');
+            } catch (err) {
+                alert('Failed to copy text: ', err);
+            } finally {
+                document.body.removeChild(textArea);
+                dlgView.style.display = "none";
+            }
+        }
+
+        // Open link
+        function openLink(){
+            let url = dlgViewLink.innerText.trim();
+            if (!url.startsWith('http://') && !url.startsWith('https://'))
+                url = 'https://' + url;
+            window.open(url);
+            //window.location.href = lblLink.innerText;
+        };
+
+        // Edit LINK
+        function btnEdit_clicked(itemId, imgSrc, linkName, linkURL) {
+            dlgView.style.display = "none";
+            dlgAddEdit.style.display = "flex";
+            dlgEditIcon.src = getIcon(imgSrc);
+            txtName.focus();
+            txtName.value = linkName;
+            txtLink.value = linkURL;
+            dlgEditIcon.style.display = 'flex';
+            dlgAddLabel.style.display = 'none';
+            dlgAddEditDeleteBtn.style.display = 'block';
+            dlgAddEditCancelBtn.style.display = 'none';
+            dlgAddEditSaveBtn.innerText = "Update";
+        };
+
+
+        //======================================================== Events
+
+        // Page Loading Event
+        document.addEventListener("DOMContentLoaded", ()=>{ fetchAllItems(txtSearch.value.trim().toLowerCase())});
+
+        // Prevent right click
+        document.addEventListener('contextmenu', (e)=> { e.preventDefault()});
+
+        // Searchbar
+        txtSearch.addEventListener('input', ()=>{ fetchAllItems(txtSearch.value.trim().toLowerCase())});
+
+        // Add link button
+        btnAdd.addEventListener('click', ()=> {btnAdd_clicked()});
+
+        // Dialog Add/Edit
+        dlgAddEditCancelBtn.addEventListener('click', function(){ dlgAddEdit.style.display = "none"});
+        dlgAddEditCloseBtn.addEventListener('click', function(){ dlgAddEdit.style.display = "none"});
+        dlgAddEditSaveBtn.addEventListener('click', ()=>{ btnAddEdit_clicked()});
+        dlgAddEditDeleteBtn.addEventListener('click', function(){ alert('Delete')});
+
+        // Dialog View
+        dlgViewClose.addEventListener('click', function(){ dlgView.style.display = "none"});
+        dlgViewCopy.addEventListener('click', function(){ copyLinkToClipboard(dlgViewLink.innerText)});
+        dlgViewLink.addEventListener('click', function(){ openLink()});
+        
     </script>
-    
 </body>
 </html>
