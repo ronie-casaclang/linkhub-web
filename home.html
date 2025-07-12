@@ -529,74 +529,75 @@
         // Create or Add
         function addNewLink(imgSrc, linkName, linkUrl) {
             
-            const newItemRef = push(itemsRef);
+            const linkRef = ref(database, 'linkhub/user/' + USERNAME + '/links');
+            const newItemRef = push(linkRef);
             set(newItemRef, {
                 id: newItemRef.key, // Get the auto-generated key
                 icon: imgSrc,
-                name: linkName,
+                label: linkName,
                 link: linkUrl,
                 date: getFormattedTimestamp()
             })
             .then(() => {
                 toast_show('saved', 'Link added');
-                console.log("Item added successfully!");
+                console.log("Link added successfully!");
                 searchLinks('');
             })
             .catch((error) => {
                 toast_show('failed', 'Failed to add link');
-                console.error("Error adding item:", error);
+                console.error("Error adding link:", error);
             });
         }
 
         // Update or Edit
-        function updateLink(itemId, icon, name, link) {
-            const itemRef = ref(database, `linkhub/items/${itemId}`);
-            get(itemRef) // First, check if the item exists before updating
+        function updateLink(itemId, icon, label, link) {
+            const linkRef = ref(database, 'linkhub/user/' + USERNAME + '/links/' + itemId);
+            get(linkRef) // First, check if the item exists before updating
                 .then((snapshot) => {
                     if (snapshot.exists()) { // If the item exists, update it
-                        update(itemRef, {
+                        update(linkRef, {
                             icon: icon,
-                            name: name,
+                            label: label,
                             link: link,
                             date: getFormattedTimestamp()
                         })
                         .then(() => {
                             toast_show('saved', 'Link updated');
-                            console.log("Item updated successfully!");
+                            console.log("Link updated successfully!");
                             searchLinks('');
                         })
                         .catch((error) => {
                             toast_show('failed', 'Update failed');
-                            console.log("Failed to update item.");
+                            console.log("Failed to update link.");
                         });
-                    } else console.log("Item does not exist.");
+                    } else console.log("Link does not exist.");
                 })
                 .catch((error) => {
-                    console.error("Error retrieving item:", error);
-                    alert("Error checking item existence.");
+                    console.error("Error retrieving link:", error);
+                    alert("Error checking link existence.");
                 });
         }  
 
         // Delete or Remove
         function deleteLink(itemId) {
-            const itemRef = ref(database, `linkhub/items/${itemId}`); // Reference to the specific item
-            get(itemRef) // First, check if the item exists before deleting
+            const linkRef = ref(database, 'linkhub/user/' + USERNAME + '/links/' + itemId);
+            get(linkRef) // First, check if the item exists before deleting
                 .then((snapshot) => {
                     if (snapshot.exists()) {
-                        remove(itemRef) // If the item exists, delete it
+                        remove(linkRef) // If the item exists, delete it
                         .then(() => {
                             toast_show('saved', 'Link deleted');
-                            console.log("Item deleted successfully!");
+                            console.log("Link deleted successfully!");
                             searchLinks('');
                         })
                         .catch((error) => {
                             toast_show('failed', 'Failed to delete');
-                            console.log("Failed to delete item.");
+                            console.log("Failed to delete Link.");
                         });
-                    } else console.log("Item does not exist.");
+                    } else console.log("Link does not exist.");
                 })
                 .catch((error) => {
-                    console.log("Error retrieving item: ", error);
+                    console.log("Error retrieving link: ", error);
                 });
         }
 
