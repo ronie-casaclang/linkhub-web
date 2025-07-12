@@ -399,17 +399,14 @@
         // Authenticate - signed in
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                EMAIL = user.email;
-                USERNAME = getUsername(EMAIL);
-                console.log("User is signed in: ", EMAIL);
-                addUser(USERNAME); // add new user to RDTB
-                fetchLinks(USERNAME);
-
-                // Safe to use database now
-                const dataRef = ref(database, "linkhub/user");
-                get(dataRef).then((snapshot) => {
-                if (snapshot.exists())
-                    console.log(snapshot.val());
+                user.getIdToken(true).then((token)=>{
+                    if (user.emailVerified){
+                        EMAIL = user.email;
+                        USERNAME = getUsername(EMAIL);
+                        console.log("Signed in: ", EMAIL);
+                        addUser(USERNAME);
+                        fetchLinks(USERNAME);
+                    } else window.location.href = "login.html";
                 });
             } else window.location.href = "login.html";
         });
