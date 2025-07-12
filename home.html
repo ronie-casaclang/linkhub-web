@@ -395,10 +395,11 @@
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 console.log("User is signed in: ", user.email);
+                addUser(getUsername(user.email)); // add new user to RDTB
                 dlgAccountEmail.innerText = user.email;
 
                 // Safe to use database now
-                const dataRef = ref(database, "linkhub/items");
+                const dataRef = ref(database, "linkhub/user");
                 get(dataRef).then((snapshot) => {
                 if (snapshot.exists())
                     console.log(snapshot.val());
@@ -452,6 +453,37 @@
                 })
                 .catch((error) => {
                     console.error('Error fetching data:', error);
+                });
+        }
+
+        // Add User
+        function addUser(username) {
+            const userRef = ref(database, 'linkhub/user/' + username);
+            get(userRef).then((snapshot) => {
+                if (snapshot.exists){
+                    update(userRef, {
+                        username: username
+                    }).then(()=>{
+                        lastLogin(username);
+                    }).catch((error)=>{
+                        console.error("Error adding user:", error);
+                    });
+                }
+            }).catch((error) => {
+                console.error("Error checking user:", error);
+            });
+        }
+
+        // Date Log
+        function lastLogin(username){
+            const dateRef = ref(database, 'linkhub/user/' + username + '/date_log');
+            const newDateRef = push(dateRef);
+            set(newDateRef, getFormattedTimestamp())
+                .then(() => {
+                    console.log("Log: " + getFormattedTimestamp());
+                })
+                .catch((error) => {
+                    console.error("Error saving log:", error);
                 });
         }
 
@@ -727,6 +759,15 @@
             dlgAddEdit.style.display = "none";
         }
 
+        // Get Username from email
+        function getUsername(email){
+            let uname = '';
+            for(const char of email){
+                if (char === '@') break;
+                uname += char;
+            }
+            return uname;
+        }
         //======================================================== Events
 
         // Page Loading Event
