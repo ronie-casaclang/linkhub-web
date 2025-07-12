@@ -25,7 +25,7 @@
                 <h1> Welcome back!</h1>
                 <p>Login your credentials to proceed</p>
                 <span id="failedMsg"> Invalid email or password </span>
-                <label for="email">Email <address></address></label>
+                <label for="email">Email </label>
                 <div>
                     <img src="images/app/email.png" alt="">
                     <input type="email" id="txtEmail" placeholder="you@example.com" required />
@@ -74,8 +74,6 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // ============================================= Firebase
-
         // Authenticate - login
         function loginUser(auth, email, password) {
             signInWithEmailAndPassword(auth, email, password)
@@ -88,32 +86,17 @@
                         console.log("Verified Account: Login successful!");
                         location.href = "home.html";
                     } else {
-                        invalidMessage('verify', 'Verify your email to proceed');
+                        //invalidMessage('verify', 'Verify your email to proceed');
+                        invalidMessage('verify', "Please verify your account. If you didn't receive the email, check your spam or promotions folder.");
                         console.log("Please verify your email before logging in.");
                         progressbar_show(false);
                     }
                 })
                 .catch((error) => {
-                    invalidMessage('failed', 'Invalid email or password');
+                    invalidMessage('failed', 'Incorrect email or password');
                     console.log("Login failed:", error.message);
                     progressbar_show(false);
                 });
-        }
-
-        // Invalid Message
-        function invalidMessage(type, msg){
-            switch (type){
-                case "verify": 
-                    failedMsg.style.backgroundColor = "rgba(255, 208, 1, 0.3)"; 
-                    failedMsg.style.color = "black"; 
-                    break;
-                case "failed": 
-                    failedMsg.style.backgroundColor = "rgba(255, 0, 0, 0.2)";
-                    failedMsg.style.color = "rgb(215, 0, 0)";
-                    break;
-            }
-            failedMsg.innerText = msg;
-            failedMsg.style.visibility = 'visible';
         }
 
         // ============================================= Events
@@ -121,7 +104,7 @@
         // Page Loading Event
         document.addEventListener("DOMContentLoaded", ()=>{ progressbar_show(false)});
 
-        // Signup handler
+        // Login handler
         window.handleLogin = function (e) {
             e.preventDefault();
             progressbar_show(true)
@@ -132,12 +115,13 @@
         txtEmail.addEventListener('input', ()=>{ failedMsg.style.visibility = 'hidden'});
         txtPassword.addEventListener('input', ()=>{ failedMsg.style.visibility = 'hidden'});
 
-        // Textbox keypress
+        // Show/Hide Password
         showPassword.addEventListener("change", function () {
             txtPassword.type = this.checked ? "text" : "password";
         });
 
     </script>
     <script src="script/progressbar.js"></script>
+    <script src="script/invalidLogPrompt.js"></script>
 </body>
 </html>

@@ -8,6 +8,7 @@
     <link rel="shortcut icon" href="images/app/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="style/root.css">
     <link rel="stylesheet" href="style/register.css">
+    <link rel="stylesheet" href="style/progressbar.css">
     <style>
         .main{ flex-direction: row-reverse; }
         @media only screen and (max-width: 1200px){
@@ -16,28 +17,36 @@
     </style>
 </head>
 <body>
+    
+    <!-- Dialog ProgressBar -->
+    <div id="dlgProgressBar">
+        <div id="progressBar"></div>
+    </div>
+    
+    <!-- Main -->
     <div class="main">
         <div class="form-panel">
-            <form onsubmit="handleLogin(event)">
+            <form onsubmit="handleSignup(event)">
                 <img src="images/app/logo.png" alt="logo" id="logo">
                 <h1> Create Account</h1>
                 <p>Hello! Register to get started</p>
-                <label for="email">Email <address></address></label>
+                <span id="failedMsg"> Invalid email or password </span>
+                <label>Email</label>
                 <div>
                     <img src="images/app/email.png" alt="">
-                    <input type="email" id="email" placeholder="you@example.com" required />
+                    <input type="email" id="txtEmail" placeholder="you@example.com" required />
                 </div>
-                <label for="create-password">Password</label>
+                <label>Password</label>
                 <div>
                     <img src="images/app/lock.png" alt="">
-                    <input type="password" id="create-password" placeholder="••••••••••••" required />
+                    <input type="password" id="txtCreatePassword" placeholder="••••••" required />
                 </div>
                 <div>
                     <img src="images/app/lock.png" alt="">
-                    <input type="password" id="confirm-password" placeholder="••••••••••••" required />
+                    <input type="password" id="txtConfirmPassword" placeholder="••••••" required />
                 </div>
                 <span>
-                    <input type="checkbox" name="" id="show-password"> Show password
+                    <input type="checkbox" name="" id="showPassword"> Show password
                 </span>
                 <button type="submit" id="login">Submit</button>
                 <span> 
@@ -53,20 +62,85 @@
         </div>
     </div>
 
-    <script>
+    <script type="module">
+
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+        import { getDatabase } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
+        import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+
+        // Web App Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBWDrx76I3HMdEFy_NGZ9kWGx8HW9Igy-8",
+            authDomain: "myproject-a3e0c.firebaseapp.com",
+            databaseURL: "https://myproject-a3e0c-default-rtdb.firebaseio.com",
+            projectId: "myproject-a3e0c",
+            storageBucket: "myproject-a3e0c.firebasestorage.app",
+            messagingSenderId: "479799357780",
+            appId: "1:479799357780:web:20c7d674b907e75e4d58c1"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Register
+        function registerUser(auth, email, password) {
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+
+                    // Send email verification
+                    sendEmailVerification(user)
+                        .then(() => {
+                            alert("Account created! Please check your email to verify your account.");
+                            console.log("Verification email sent.");
+                            progressbar_show(false);
+                        })
+                        .catch((error) => {
+                            console.error("Failed to send verification email:", error.message);
+                            invalidMessage('failed', 'Failed to send verification email');
+                            progressbar_show(false);
+                        });
+                })
+                .catch((error) => {
+                    console.error("Error creating user:", error.message);
+                    invalidMessage('failed', 'Error creating user');
+                    progressbar_show(false);
+                });
+        }
+
+        // ============================================= Events
+
+        // Page Loading Event
+        document.addEventListener("DOMContentLoaded", ()=>{ progressbar_show(false)});
 
         // Signup handler
-        window.handleLogin = function (e) {
+        window.handleSignup = function (e) {
             e.preventDefault();
-            const email = document.getElementById("email").value;
-            const password1 = document.getElementById("create-password").value;
-            const password2 = document.getElementById("confirm-password").value;
-
-            if (password1 === password2) alert(email + '\n' + password1);
-            else alert('Mismatch password!');
-
+            const password1 = document.getElementById("txtCreatePassword").value;
+            const password2 = document.getElementById("txtConfirmPassword").value;
+            
+            if (password1 !== password2) invalidMessage('failed', 'Passwords do not match');
+            else if (password1.length < 6 || password2.length < 6) invalidMessage('failed', 'Oops! Your password is too short');
+            else {
+                progressbar_show(true)
+                registerUser(auth, txtEmail.value, txtCreatePassword.value);
+            }
         }
+
+        // Textbox keypress
+        txtEmail.addEventListener('input', ()=>{ failedMsg.style.visibility = 'hidden'});
+        txtCreatePassword.addEventListener('input', ()=>{ failedMsg.style.visibility = 'hidden'});
+        txtConfirmPassword.addEventListener('input', ()=>{ failedMsg.style.visibility = 'hidden'});
+
+        // Show/Hide Password
+        showPassword.addEventListener("change", function () {
+            txtCreatePassword.type = this.checked ? "text" : "password";
+            txtConfirmPassword.type = this.checked ? "text" : "password";
+        });
     </script>
-    
+    <script src="script/progressbar.js"></script>
+    <script src="script/invalidLogPrompt.js"></script>
 </body>
 </html>
