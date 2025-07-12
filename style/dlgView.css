@@ -85,4 +85,5 @@
 /* Mobile Phone */
 @media only screen and (max-width: 600px){
     #dlgView > div { width: 300px; }
+    #dlgView > div > div > button { padding: 7px 5px; }
 }

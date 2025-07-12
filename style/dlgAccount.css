@@ -22,9 +22,13 @@
     align-items: center;
     box-sizing: border-box;
 }
+#dlgAccount > div > h4{
+    margin: 5px 0px 0px;
+    color: var(--color);
+}
 #dlgAccount > div > p {
+    margin: 0px 0px 5px;
     color: var(--link);
-    margin: 10px 0px 15px;
     word-break: break-all;
     white-space: normal;
 }
@@ -39,8 +43,8 @@
 }
 
 #dlgAccount > div > button {
+    margin-top: 10px;
     width: 100%;
-    height: 30px;
     padding: 5px;
     border-radius: 5px;
     border: none;
@@ -48,6 +52,7 @@
     background-color: var(--button-negative);
     color: var(--color);
 }
+#dlgAccount > div > #dlgAccountLogout { background-color: var(--color); color: var(--background); }
 #dlgAccount > div > #dlgAccountCloseBtn {
     margin: 0;
     padding: 5px;
@@ -60,3 +65,10 @@
 }
 #dlgAccount > div > #dlgAccountCloseBtn:hover, button:hover { opacity: 75%;}
 #dlgAccount > div > #dlgAccountCloseBtn:active, button:active { opacity: 50%;}
+
+
+/* Mobile Phone */
+@media only screen and (max-width: 600px){
+    #dlgAccount > div > button { padding: 8px 5px; }
+    #dlgAccount > div > p { font-size: 12px; }
+}
