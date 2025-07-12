@@ -360,8 +360,7 @@
     
     <!-- Toast Message -->
     <div class="toast-msg" id="toastMsgBox">
-        <img src="images/app/saved.png" alt="" srcset="" id="toastIcon">
-        <p id="toastMessage"> Saved </p>
+        <p id="toastMessage"> Message sample only </p>
     </div>
 
     <!-- Script -->
@@ -450,7 +449,7 @@
                         });
                     } else {
                         console.log('No data found.');
-                        toast_show('failed', 'Empty list');
+                        toast_show('Empty list');
                     }
                     progressbar_show(false);
                 })
@@ -486,7 +485,7 @@
                         });
                     } else {
                         console.log('No data found.');
-                        toast_show('failed', 'Empty list');
+                        toast_show('Empty list');
                     }
                     progressbar_show(false);
                 })
@@ -539,12 +538,12 @@
                 date: getFormattedTimestamp()
             })
             .then(() => {
-                toast_show('saved', 'Link added');
+                toast_show('Link added successfully!');
                 console.log("Link added successfully!");
                 searchLinks('');
             })
             .catch((error) => {
-                toast_show('failed', 'Failed to add link');
+                toast_show('Failed to add link');
                 console.error("Error adding link:", error);
             });
         }
@@ -562,12 +561,12 @@
                             date: getFormattedTimestamp()
                         })
                         .then(() => {
-                            toast_show('saved', 'Link updated');
+                            toast_show('Updated successfully!');
                             console.log("Link updated successfully!");
                             searchLinks('');
                         })
                         .catch((error) => {
-                            toast_show('failed', 'Update failed');
+                            toast_show('Failed to update link.');
                             console.log("Failed to update link.");
                         });
                     } else console.log("Link does not exist.");
@@ -586,12 +585,12 @@
                     if (snapshot.exists()) {
                         remove(linkRef) // If the item exists, delete it
                         .then(() => {
-                            toast_show('saved', 'Link deleted');
+                            toast_show('Deleted successfully!');
                             console.log("Link deleted successfully!");
                             searchLinks('');
                         })
                         .catch((error) => {
-                            toast_show('failed', 'Failed to delete');
+                            toast_show('Failed to delete link');
                             console.log("Failed to delete Link.");
                         });
                     } else console.log("Link does not exist.");
@@ -673,12 +672,7 @@
         }
         
         // Toast Message
-        function toast_show(icon, msg){
-            switch (icon){
-                case 'saved': toastIcon.src = "images/app/saved.png"; break;
-                case 'failed': toastIcon.src = "images/app/failed.png"; break;
-                case 'copied': toastIcon.src = "images/app/clipboard.png"; break;
-            }
+        function toast_show(msg){
             toastMessage.innerText = msg;
             toastMsgBox.style.display = "flex";
             setTimeout(()=> {
@@ -751,9 +745,9 @@
             try {
                 const successful = document.execCommand('copy');
                 const msg = successful ? 'successful' : 'unsuccessful';
-                if (msg === "successful") toast_show('copied', 'Copied link');
+                if (msg === "successful") toast_show('Copied to clipboard');
             } catch (err) {
-                toast_show('failed', 'Failed copy');
+                toast_show('Failed to copy');
                 console.log('Failed to copy text: ', err);
             } finally {
                 document.body.removeChild(textArea);

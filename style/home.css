@@ -88,10 +88,12 @@ body > .main > .link-main {
 
 /* Toast Message */
 .toast-msg{
-    max-width: 200px;
-    padding: 10px 20px 10px 15px;
-    border-radius: 5px;
-    background-color: rgba(129, 129, 129, 0.8);
+    width: max-content;
+    max-width: 300px;
+    padding: 15px 20px;
+    border-radius: 7px;
+    background-color: var(--toast-bg);
+    color: var(--color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -103,15 +105,7 @@ body > .main > .link-main {
     z-index: 99;
     display: none;
 }
-.toast-msg > img {
-    width: 20px;
-    height: 20px;
-    margin: 0;
-}
-.toast-msg > p {
-    margin: 0;
-    color: white;
-}
+.toast-msg > p { margin: 0; }
 
 /* Mobile Phone */
 @media only screen and (max-width: 600px){
@@ -121,5 +115,12 @@ body > .main > .link-main {
         width: 26px;
         height: 26px;
     }
-
+    .toast-msg{
+        border-radius: 50px;
+        left: 50%;
+        right: 50%;
+        bottom: 15%;
+        transform: translate(-50%, 50%);
+    }
+    .toast-msg > p{ font-size: 10px; }
 }
