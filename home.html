@@ -353,6 +353,9 @@
             </div>
             -->
         </div>
+        <span id="emptyList">
+            Empty List
+        </span>
     </div>
 
     <!-- Floating Add Button -->
@@ -430,6 +433,7 @@
             get(linksRef)
                 .then((snapshot) => {
                     document.querySelector('.link-main').innerHTML = '';
+                    emptyPromptDisplay(true, 'No Data Found');
                     if (snapshot.exists()) {
                         const data = snapshot.val();
 
@@ -446,13 +450,12 @@
 
                         // Load sorted items
                         itemsArray.forEach(item => {
-                            if (item.label.toLowerCase().includes(keyword) || item.link.toLowerCase().includes(keyword))
+                            if (item.label.toLowerCase().includes(keyword) || item.link.toLowerCase().includes(keyword)) {
                                 addLinkItem(item.key, item.icon, item.label, item.link);
+                                emptyPromptDisplay(false, '');
+                            }
                         });
-                    } else {
-                        console.log('No data found.');
-                        toast_show('Empty list');
-                    }
+                    } else console.log('No data found.');
                     progressbar_show(false);
                 })
                 .catch((error) => {
@@ -466,6 +469,7 @@
             get(linksRef)
                 .then((snapshot) => {
                     document.querySelector('.link-main').innerHTML = '';
+                    emptyPromptDisplay(true, 'Empty List');
                     if (snapshot.exists()) {
                         const data = snapshot.val();
 
@@ -484,11 +488,9 @@
                         itemsArray.forEach(item => {
                             //if (item.label.toLowerCase().includes(keyword) || item.link.toLowerCase().includes(keyword))
                             addLinkItem(item.key, item.icon, item.label, item.link);
+                            emptyPromptDisplay(false, '');
                         });
-                    } else {
-                        console.log('No data found.');
-                        toast_show('Empty list');
-                    }
+                    } else console.log('No data found.');
                     progressbar_show(false);
                 })
                 .catch((error) => {
@@ -813,6 +815,13 @@
                 dlgAccountEmail.innerText = EMAIL;
                 dlgAccountName.innerText = USERNAME; 
             }
+        }
+
+        // Empty List Prompt
+        function emptyPromptDisplay(res, msg){
+            if (res) emptyList.style.display = "flex";
+            else emptyList.style.display = "none";
+            emptyList.innerText = msg;
         }
 
         //======================================================== Events
