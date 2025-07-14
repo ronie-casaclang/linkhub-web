@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="style/dlgView.css">
     <link rel="stylesheet" href="style/dlgAccount.css">
 </head>
-<body>
+<body id="body">
     
     <!-- Dialog ProgressBar -->
     <div id="dlgProgressBar">
@@ -683,6 +683,7 @@
         
         // Add Link
         function btnAdd_clicked() {
+            disableScroll(true);
             dlgAddEdit.style.display = "flex";
             dlgEditIcon.src = 'images/icons/link.png';
             txtName.focus();
@@ -707,24 +708,19 @@
                 alert("Please fill in all fields.");
                 return;
             } else {
-                // Add new item
-                if(dlgAddEditSaveBtn.innerText === 'Save' && txtItemId === ''){
-                    progressbar_show(true);
-                    addNewLink(imgSrc, linkName, linkURL);
-                    dlgAddEdit.style.display = "none"; 
-                }
-                // Update an item
-                else if(dlgAddEditSaveBtn.innerText === 'Update' && txtItemId !== ''){
-                    progressbar_show(true);
-                    updateLink(txtItemId, imgSrc, linkName, linkURL);
-                    dlgAddEdit.style.display = "none"; 
-                }
+                // Add or Update item
+                if(dlgAddEditSaveBtn.innerText === 'Save' && txtItemId === '') addNewLink(imgSrc, linkName, linkURL);
+                else if(dlgAddEditSaveBtn.innerText === 'Update' && txtItemId !== '') updateLink(txtItemId, imgSrc, linkName, linkURL);
+                progressbar_show(true);
+                disableScroll(false);
+                hideDialogs();
             }
         };
 
         // Dialog popup - View
         function dlgView_clicked(itemId, imgSrc, linkName, linkURL){
             dlgView.style.display = 'flex';
+            disableScroll(true);
             dlgViewLink.innerText = linkURL
             dlgViewName.innerText = linkName;
             dlgViewIcon.src = getIcon(imgSrc);
@@ -752,7 +748,8 @@
                 console.log('Failed to copy text: ', err);
             } finally {
                 document.body.removeChild(textArea);
-                dlgView.style.display = "none";
+                disableScroll(false);
+                hideDialogs();
             }
         }
 
@@ -769,6 +766,7 @@
         function btnEdit_clicked(itemId, imgSrc, linkName, linkURL) {
             dlgView.style.display = "none";
             dlgAddEdit.style.display = "flex";
+            disableScroll(true);
             dlgEditIcon.src = getIcon(imgSrc);
             //txtName.focus();
             txtName.value = linkName;
@@ -786,7 +784,8 @@
             if (confirm("Are you sure you want to delete?")) {
                 progressbar_show(true);
                 deleteLink(txtItemId.value.trim());
-                dlgAddEdit.style.display = "none";
+                disableScroll(false);
+                hideDialogs();
             }
         }
 
@@ -794,6 +793,8 @@
         function hideDialogs(){
             dlgView.style.display = "none";
             dlgAddEdit.style.display = "none";
+            dlgAccount.style.display = "none";
+            disableScroll(false);
         }
 
         // Get Username from email
@@ -808,12 +809,22 @@
         
         // Account Show
         function accountShow(res){
-            if (!res) dlgAccount.style.display = "none";
+            if (!res) {
+                dlgAccount.style.display = "none";
+                disableScroll(false);
+            }
             else {
                 dlgAccount.style.display = "flex";
                 dlgAccountEmail.innerText = EMAIL;
                 dlgAccountName.innerText = USERNAME; 
+                disableScroll(true);
             }
+        }
+
+        // Disable scroll
+        function disableScroll(res){
+            if (res) body.style.overflow = "hidden";
+            else body.style.overflow = "auto";
         }
 
         // Empty List Prompt
@@ -846,13 +857,13 @@
         btnAdd.addEventListener('click', ()=> { btnAdd_clicked()});
 
         // Dialog Add/Edit
-        dlgAddEditCancelBtn.addEventListener('click', function(){ dlgAddEdit.style.display = "none"});
-        dlgAddEditCloseBtn.addEventListener('click', function(){ dlgAddEdit.style.display = "none"});
+        dlgAddEditCancelBtn.addEventListener('click', function(){ hideDialogs()});
+        dlgAddEditCloseBtn.addEventListener('click', function(){ hideDialogs()});
         dlgAddEditSaveBtn.addEventListener('click', ()=>{ btnAddEdit_clicked()});
         dlgAddEditDeleteBtn.addEventListener('click', function(){ btnDelete_clicked()});
 
         // Dialog View
-        dlgViewClose.addEventListener('click', function(){ dlgView.style.display = "none"});
+        dlgViewClose.addEventListener('click', function(){ hideDialogs()});
         dlgViewCopy.addEventListener('click', function(){ copyLinkToClipboard(dlgViewLink.innerText)});
         dlgViewLink.addEventListener('click', function(){ openLink()});
         
