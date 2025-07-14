@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="style/root.css">
     <link rel="stylesheet" href="style/register.css">
     <link rel="stylesheet" href="style/progressbar.css">
+    <link rel="stylesheet" href="style/dlgRegistered.css">
     <style>
         .main{ flex-direction: row-reverse; }
         @media only screen and (max-width: 1200px){
@@ -17,6 +18,16 @@
     </style>
 </head>
 <body>
+
+    <!-- Dialog Registered -->
+    <div id="dlgRegistered">
+        <div>
+            <img src="images/app/img-email1.png">
+            <h2> Account Created! </h2>
+            <p> Check your inbox and verify your email to activate your account. </p>
+            <button id="dlgRegisteredLogin"> Login Now </button>
+        </div>
+    </div>
     
     <!-- Dialog ProgressBar -->
     <div id="dlgProgressBar">
@@ -101,7 +112,7 @@
                     // Send email verification
                     sendEmailVerification(user)
                         .then(() => {
-                            alert("Account created! Please check your email to verify your account.");
+                            dlgRegistered.style.display = "flex";
                             //console.log("Verification email sent.");
                             progressbar_show(false);
                         })
@@ -137,6 +148,9 @@
             }
         }
 
+        // Login Now
+        dlgRegisteredLogin.addEventListener('click', ()=> { location.href = "login.html" });
+
         // Textbox keypress
         txtEmail.addEventListener('input', ()=>{ failedMsg.style.visibility = 'hidden'});
         txtCreatePassword.addEventListener('input', ()=>{ failedMsg.style.visibility = 'hidden'});
@@ -147,6 +161,7 @@
             txtCreatePassword.type = this.checked ? "text" : "password";
             txtConfirmPassword.type = this.checked ? "text" : "password";
         });
+
     </script>
     <script src="script/progressbar.js"></script>
     <script src="script/invalidLogPrompt.js"></script>
