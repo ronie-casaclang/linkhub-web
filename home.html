@@ -515,7 +515,7 @@
         // Date Log
         async function lastLogin(username) {
             try {
-                const timestamp = await onlineTimestamp(); // from external js file
+                const timestamp = await onlineTimestamp();
                 const dateRef = ref(database, 'linkhub/user/' + username + '/date_log');
                 const newDateRef = push(dateRef);
                 await set(newDateRef, timestamp);
@@ -667,6 +667,23 @@
             return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}`;
         }
         
+        // Online Timestamp
+        async function onlineTimestamp() {
+            try {
+                // Extract and format values
+                const response = await fetch('https://www.timeapi.io/api/Time/current/zone?timeZone=Asia/Manila');
+                const data = await response.json();
+                const { year, month, day, hour, minute, seconds, milliSeconds } = data;
+                const formatted = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')} `
+                                + `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+                                + `.${String(milliSeconds).padStart(3, '0')}`;
+                return formatted;
+            } catch (error) {
+                console.error('Error fetching internet time:', error);
+                return getFormattedTimestamp();
+            }
+        }
+
         // Toast Message
         function toast_show(msg){
             toastMessage.innerText = msg;
@@ -869,6 +886,5 @@
         
     </script>
     <script src="script/progressbar.js"></script>
-    <script src="script/onlineTimestamp.js"></script>
 </body>
 </html>
