@@ -560,7 +560,7 @@
                         })
                         .then(() => {
                             toast_show('Updated successfully!');
-                            console.log("Link updated successfully!");
+                            //console.log("Link updated successfully!");
                             searchLinks('');
                         })
                         .catch((error) => {
@@ -715,11 +715,13 @@
             const imgSrc = defineIcon(txtLink.value);
             const linkName = txtName.value;
             const linkURL = txtLink.value;
-            
-            if (linkName.trim() === "" || linkURL.trim() === "") {
-                alert("Please fill in all fields.");
-                return;
-            } else {
+
+            // Set and check null input
+            txtName.style.border = "1px solid var(--border)"; 
+            txtLink.style.border = "1px solid var(--border)"; 
+            if (linkName.trim() === "") { txtName.style.border = "1px solid red"; txtName.focus(); }
+            else if (linkURL.trim() === "") { txtLink.style.border = "1px solid red"; txtLink.focus(); }
+            else {
                 // Add or Update item
                 if(dlgAddEditSaveBtn.innerText === 'Save' && txtItemId === '') addNewLink(imgSrc, linkName, linkURL);
                 else if(dlgAddEditSaveBtn.innerText === 'Update' && txtItemId !== '') updateLink(txtItemId, imgSrc, linkName, linkURL);
@@ -803,8 +805,10 @@
 
         // Hide Dialogs
         function hideDialogs(){
-            dlgView.style.display = "none";
+            txtName.style.border = "1px solid var(--border)"; 
+            txtLink.style.border = "1px solid var(--border)"; 
             dlgAddEdit.style.display = "none";
+            dlgView.style.display = "none";
             dlgAccount.style.display = "none";
             disableScroll(false);
         }
