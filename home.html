@@ -514,6 +514,7 @@
         }
 
         // Date Log
+        /*
         function lastLogin(username){
             const dateRef = ref(database, 'linkhub/user/' + username + '/date_log');
             const newDateRef = push(dateRef);
@@ -524,6 +525,21 @@
                 .catch((error) => {
                     console.error("Error saving log:", error);
                 });
+        }
+        */
+        async function lastLogin(username) {
+            try {
+                const timestamp = await onlineTimestamp(); // from external js file
+
+                const dateRef = ref(database, 'linkhub/user/' + username + '/date_log');
+                const newDateRef = push(dateRef);
+
+                await set(newDateRef, timestamp);
+                console.log("Log saved: " + timestamp);
+
+            } catch (error) {
+                console.error("Error saving log:", error);
+            }
         }
 
         // Create or Add
@@ -845,7 +861,6 @@
             if (!allowed.includes(event.target.tagName)) event.preventDefault();
         });
         
-        
         // Back button click
         history.pushState("","", location.href);
         window.addEventListener('popstate', (e)=> { hideDialogs()});
@@ -875,5 +890,6 @@
         
     </script>
     <script src="script/progressbar.js"></script>
+    <script src="script/onlineTimestamp.js"></script>
 </body>
 </html>
