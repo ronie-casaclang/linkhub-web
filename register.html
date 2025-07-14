@@ -39,11 +39,11 @@
                 <label>Password</label>
                 <div>
                     <img src="images/app/icon-password.png" alt="">
-                    <input type="password" id="txtCreatePassword" placeholder="••••••" required />
+                    <input type="password" id="txtCreatePassword" placeholder="Create password" required />
                 </div>
                 <div>
                     <img src="images/app/icon-password.png" alt="">
-                    <input type="password" id="txtConfirmPassword" placeholder="••••••" required />
+                    <input type="password" id="txtConfirmPassword" placeholder="Re-type password" required />
                 </div>
                 <span>
                     <input type="checkbox" name="" id="showPassword"> Show password
@@ -102,7 +102,7 @@
                     sendEmailVerification(user)
                         .then(() => {
                             alert("Account created! Please check your email to verify your account.");
-                            console.log("Verification email sent.");
+                            //console.log("Verification email sent.");
                             progressbar_show(false);
                         })
                         .catch((error) => {

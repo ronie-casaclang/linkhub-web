@@ -403,7 +403,7 @@
                     if (user.emailVerified){
                         EMAIL = user.email;
                         USERNAME = getUsername(EMAIL);
-                        console.log("Signed in: ", EMAIL);
+                        //console.log("Signed in: ", EMAIL);
                         addUser(USERNAME);
                         fetchLinks(USERNAME);
                     } else window.location.href = "login.html";
@@ -416,7 +416,6 @@
             signOut(auth)
                 .then(() => {
                     progressbar_show(true);
-                    console.log("User signed out.");
                     window.location.href = "login.html";
                 })
                 .catch((error) => {
@@ -514,29 +513,12 @@
         }
 
         // Date Log
-        /*
-        function lastLogin(username){
-            const dateRef = ref(database, 'linkhub/user/' + username + '/date_log');
-            const newDateRef = push(dateRef);
-            set(newDateRef, getFormattedTimestamp())
-                .then(() => {
-                    console.log("Log: " + getFormattedTimestamp());
-                })
-                .catch((error) => {
-                    console.error("Error saving log:", error);
-                });
-        }
-        */
         async function lastLogin(username) {
             try {
                 const timestamp = await onlineTimestamp(); // from external js file
-
                 const dateRef = ref(database, 'linkhub/user/' + username + '/date_log');
                 const newDateRef = push(dateRef);
-
                 await set(newDateRef, timestamp);
-                console.log("Log saved: " + timestamp);
-
             } catch (error) {
                 console.error("Error saving log:", error);
             }
@@ -556,7 +538,6 @@
             })
             .then(() => {
                 toast_show('Link added successfully!');
-                console.log("Link added successfully!");
                 searchLinks('');
             })
             .catch((error) => {
@@ -584,7 +565,6 @@
                         })
                         .catch((error) => {
                             toast_show('Failed to update link.');
-                            console.log("Failed to update link.");
                         });
                     } else console.log("Link does not exist.");
                 })
@@ -603,7 +583,6 @@
                         remove(linkRef) // If the item exists, delete it
                         .then(() => {
                             toast_show('Deleted successfully!');
-                            console.log("Link deleted successfully!");
                             searchLinks('');
                         })
                         .catch((error) => {

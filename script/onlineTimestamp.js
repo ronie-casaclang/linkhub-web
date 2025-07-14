@@ -8,7 +8,6 @@ async function onlineTimestamp() {
         const formatted = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')} `
                         + `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
                         + `.${String(milliSeconds).padStart(3, '0')}`;
-        console.log('online ts');
         return formatted;
     } catch (error) {
         console.error('Error fetching internet time:', error);
@@ -22,7 +21,6 @@ async function onlineTimestamp() {
         const minutes = String(now.getMinutes()).padStart(2, '0');
         const seconds = String(now.getSeconds()).padStart(2, '0');
         const milliseconds = String(now.getMilliseconds()).padStart(3, '0');
-        console.log('local ts');
         return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}`;
     }
 }

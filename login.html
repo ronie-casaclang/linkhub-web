@@ -91,10 +91,9 @@
                     // Check if email is verified
                     if (user.emailVerified) {
                         progressbar_show(false);
-                        console.log("Verified Account: Login successful!");
+                        //console.log("Verified Account: Login successful!");
                         location.href = "home.html";
                     } else {
-                        //invalidMessage('verify', 'Verify your email to proceed');
                         invalidMessage('verify', "Please verify your account. If you didn't receive the email, check your spam or promotions folder.");
                         console.log("Please verify your email before logging in.");
                         progressbar_show(false);
