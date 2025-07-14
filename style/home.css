@@ -103,7 +103,7 @@ body > .main > span {
     padding: 15px 20px;
     border-radius: 7px;
     background-color: var(--toast-bg);
-    color: var(--color);
+    color: white;
     display: flex;
     justify-content: center;
     align-items: center;

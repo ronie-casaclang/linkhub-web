@@ -2,7 +2,7 @@
     --primary: #0000ff;
     --padding: 20px;
     --background: white;
-    --toast-bg: rgba(228, 228, 228, 0.8);
+    --toast-bg: rgba(0, 0, 0, 0.9);
     --dialog-bg: rgba(0, 0, 0, 0.2);
     --dialog-shadow: 0px 1px 7px rgba(128, 128, 128, 0.5);
     --button-negative: rgba(220, 220, 220);
@@ -16,7 +16,7 @@
 @media (prefers-color-scheme: dark) {
     :root{
         --background: rgb(17, 17, 17);
-        --toast-bg: rgba(42, 42, 42, 0.8);
+        --toast-bg: rgba(58, 58, 58, 0.95);
         --dialog-bg: rgba(181, 181, 181, 0.2);
         --link: dodgerblue;
         --color: white;
