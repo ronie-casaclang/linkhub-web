@@ -134,8 +134,14 @@ form > #login{
 }
 form > #login:hover { opacity: 75%;}
 form > #login:active { opacity: 50%;}
-form > span { font-size: 14px; padding-left: 1px;}
-form > span > a { color: var(--link);}
+form > span { 
+    font-size: 14px; 
+    padding-left: 3px;
+    display: flex;
+    align-items: center; 
+    column-gap: 3px;
+}
+form > span > a { color: var(--link); }
 
 
 /* Tablet */
