@@ -66,8 +66,7 @@
 
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-        import { getDatabase } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
-        import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+        import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 
         // Web App Firebase configuration
         const firebaseConfig = {
@@ -83,6 +82,15 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+
+        // Authenticate - signed in
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                user.getIdToken(true).then((token)=>{
+                    if (user.emailVerified) window.location.href = "home.html";
+                });
+            }
+        });
 
         // Register
         function registerUser(auth, email, password) {
@@ -104,8 +112,8 @@
                         });
                 })
                 .catch((error) => {
-                    console.error("Error creating user:", error.message);
-                    invalidMessage('failed', 'Error creating user');
+                    console.error("Error creating user/already in use:", error.message);
+                    invalidMessage('failed', 'This user is already exist');
                     progressbar_show(false);
                 });
         }
