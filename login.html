@@ -34,10 +34,9 @@
                 <div>
                     <img src="images/app/icon-password.png" alt="">
                     <input type="password" id="txtPassword" placeholder="••••••" required />
+                    <img src="images/app/img-view.png" alt="" id="imgViewPW">
                 </div>
-                <span>
-                    <input type="checkbox" name="" id="showPassword"> Show password
-                </span>
+                <p id="txtForgot"> Forgot password? </p>
                 <button type="submit" id="login">Login</button>
                 <span> 
                     Don't have an account? 
@@ -111,6 +110,12 @@
         // Page Loading Event
         document.addEventListener("DOMContentLoaded", ()=>{ progressbar_show(false)});
 
+        // Prevent right click
+        document.addEventListener('contextmenu', (e)=> {
+            const allowed = ["INPUT"];
+            if (!allowed.includes(event.target.tagName)) event.preventDefault();
+        });
+        
         // Login handler
         window.handleLogin = function (e) {
             e.preventDefault();
@@ -123,8 +128,19 @@
         txtPassword.addEventListener('input', ()=>{ failedMsg.style.visibility = 'hidden'});
 
         // Show/Hide Password
-        showPassword.addEventListener("change", function () {
-            txtPassword.type = this.checked ? "text" : "password";
+        var viewPW = true;
+        imgViewPW.addEventListener("click", function () {
+            if(viewPW) {
+                txtPassword.type = "text";
+                imgViewPW.src = "images/app/img-hide.png";
+            }
+            else {
+                txtPassword.type = "password";
+                imgViewPW.src = "images/app/img-view.png";
+            }
+            viewPW = !viewPW;
+            txtPassword.focus();
+
         });
 
     </script>

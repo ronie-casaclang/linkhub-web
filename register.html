@@ -134,6 +134,12 @@
         // Page Loading Event
         document.addEventListener("DOMContentLoaded", ()=>{ progressbar_show(false)});
 
+        // Prevent right click
+        document.addEventListener('contextmenu', (e)=> {
+            const allowed = ["INPUT"];
+            if (!allowed.includes(event.target.tagName)) event.preventDefault();
+        });
+        
         // Signup handler
         window.handleSignup = function (e) {
             e.preventDefault();

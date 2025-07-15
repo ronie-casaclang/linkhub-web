@@ -109,7 +109,14 @@ form > div > img {
     position: absolute;
     top: 12px;
     left: 15px;
+    cursor: text;
 }
+form > div > #imgViewPW {
+    left: auto;
+    right: 15px;
+    cursor: pointer;
+}
+form > div > #imgViewPW:hover{ opacity: 75%; }
 form input[type="password"], input[type="email"], input[type="text"]{
     width: 100%;
     height: 45px;
@@ -122,6 +129,15 @@ form input[type="password"], input[type="email"], input[type="text"]{
     background-color: var(--background);
     color: var(--color);
 }
+form input[type="password"], input[type="text"]{ padding-right: 50px; }
+form > #txtForgot { 
+    margin: 0;
+    align-self: flex-end; 
+    color: var(--link); 
+    cursor: pointer;
+}
+form > #txtForgot:hover{ opacity: 75%; }
+form > #txtForgot:active{ opacity: 50%; }
 form > #login{
     width: 100%;
     height: 55px;
@@ -149,9 +165,7 @@ form > span > a { color: var(--link); }
     
     .main{ height: auto; flex-direction: column-reverse;}
     .display-panel { position: relative; width: 100%; height: 400px; }
-    .form-panel {
-        width: 60%;
-    }
+    .form-panel { width: 60%; }
     form{ width: 100%; }
 }
 
