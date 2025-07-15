@@ -23,9 +23,13 @@
     align-items: center;
     box-sizing: border-box;
 }
-#dlgRegistered > div > h2{
+#dlgRegistered > div > h2, h3{
     margin: 5px 0px;
     color: dodgerblue;
+}
+#dlgRegistered > div > h3{
+    margin: 5px 0px;
+    color: rgb(233, 151, 0);
 }
 #dlgRegistered > div > p {
     margin: 0px 0px 10px;
@@ -48,6 +52,9 @@
     outline: none;
     background-color: dodgerblue;
     color: white;
+}
+#dlgRegistered > div > #dlgGotIt {
+    background-color: rgb(233, 151, 0);
 }
 #dlgRegistered > div > button:hover { opacity: 75%;}
 #dlgRegistered > div > button:active { opacity: 50%;}

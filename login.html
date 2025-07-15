@@ -9,8 +9,19 @@
     <link rel="stylesheet" href="style/root.css">
     <link rel="stylesheet" href="style/register.css">
     <link rel="stylesheet" href="style/progressbar.css">
+    <link rel="stylesheet" href="style/dlgRegistered.css">
 </head>
 <body>
+
+    <!-- Dialog Registered -->
+    <div id="dlgRegistered">
+        <div>
+            <img src="images/app/img-password-reset.png">
+            <h3> Check Your Inbox </h3>
+            <p> We've sent a password reset link to your email address. </p>
+            <button id="dlgGotIt"> Got It, Thanks! </button>
+        </div>
+    </div>
     
     <!-- Dialog ProgressBar -->
     <div id="dlgProgressBar">
@@ -55,7 +66,7 @@
 
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+        import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 
         // Web App Firebase configuration
         const firebaseConfig = {
@@ -105,6 +116,19 @@
                 });
         }
 
+        // Forgot Password
+        function forgotPassword(email){
+            sendPasswordResetEmail(auth, email)
+                .then(() => {
+                    progressbar_show(false)
+                    dlgRegistered.style.display = "flex";
+                })
+                .catch((error) => {
+                    console.error("Error sending reset email:", error.message);
+                    alert("Error sending reset email: " + error.message);
+                });
+        }
+
         // ============================================= Events
 
         // Page Loading Event
@@ -124,7 +148,7 @@
         }
 
         // Textbox keypress
-        txtEmail.addEventListener('input', ()=>{ failedMsg.style.visibility = 'hidden'});
+        txtEmail.addEventListener('input', ()=>{ failedMsg.style.visibility = 'hidden'; });
         txtPassword.addEventListener('input', ()=>{ failedMsg.style.visibility = 'hidden'});
 
         // Show/Hide Password
@@ -140,8 +164,30 @@
             }
             viewPW = !viewPW;
             txtPassword.focus();
-
         });
+
+        // Forgot password
+        txtForgot.addEventListener('click', ()=>{
+            let email = txtEmail.value.trim();
+            if (!email || !validateEmail(email)) {
+                if (!email) invalidMessage('failed', 'Enter your email address'); 
+                else if (!validateEmail(email)) invalidMessage('failed', 'Invalid email address'); 
+                txtEmail.focus();
+            }
+            else {
+                progressbar_show(true)
+                forgotPassword(email);
+            }
+
+            // Email validation - format checker
+            function validateEmail(email) {
+                const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return regex.test(email);
+            }
+        });
+        
+        // Dialog Reset PW Email Sent
+        dlgGotIt.addEventListener('click', ()=> { dlgRegistered.style.display = "none" });
 
     </script>
     <script src="script/progressbar.js"></script>
