@@ -23,7 +23,7 @@
     align-items: center;
     box-sizing: border-box;
 }
-#dlgRegistered > div > h2, h3{
+#dlgRegistered > div > h2, #dlgRegistered > div > h3{
     margin: 5px 0px;
     color: dodgerblue;
 }
