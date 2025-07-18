@@ -13,12 +13,23 @@
     <link rel="stylesheet" href="style/dlgAddEdit.css">
     <link rel="stylesheet" href="style/dlgView.css">
     <link rel="stylesheet" href="style/dlgAccount.css">
+    <link rel="stylesheet" href="style/dlgRegistered.css">
 </head>
 <body id="body">
     
     <!-- Dialog ProgressBar -->
     <div id="dlgProgressBar">
         <div id="progressBar"></div>
+    </div>
+
+    <!-- Dialog Registered -->
+    <div id="dlgRegistered">
+        <div>
+            <img src="images/app/img-password-reset.png">
+            <h3> Check Your Inbox </h3>
+            <p> We've sent a password reset link to your email address. </p>
+            <button id="dlgGotIt"> Got It, Thanks! </button>
+        </div>
     </div>
     
     <!-- Dialog Account -->
@@ -28,7 +39,7 @@
             <img id="dlgAccountDP" src="images/app/img-profile.png">
             <h4 id="dlgAccountName">Username</h4>
             <p id="dlgAccountEmail"> sample@gmail.com </p>
-            <button id="dlgAccountEdit"> Edit Profile </button>
+            <button id="dlgAccountChange"> Change Password </button>
             <button id="dlgAccountLogout"> Logout </button>
         </div>
     </div>
@@ -373,7 +384,7 @@
 
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+        import { getAuth, onAuthStateChanged, sendPasswordResetEmail, signOut } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
         import { getDatabase, ref, push, get, set, update, remove } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
 
         // Web App Firebase configuration
@@ -593,6 +604,19 @@
                 })
                 .catch((error) => {
                     console.log("Error retrieving link: ", error);
+                });
+        }
+
+        // Forgot Password
+        function resetPassword(email){
+            sendPasswordResetEmail(auth, email)
+                .then(() => {
+                    progressbar_show(false);
+                    dlgRegistered.style.display = "flex";
+                })
+                .catch((error) => {
+                    console.error("Error sending reset email:", error.message);
+                    alert("Unable to change password right now.");
                 });
         }
 
@@ -850,6 +874,15 @@
             emptyList.innerText = msg;
         }
 
+        // Change Password
+        function changePassword(){
+            if (confirm("Are you sure you want to change your password?")) {
+                progressbar_show(true)
+                hideDialogs();
+                resetPassword(dlgAccountEmail.innerText);
+            }
+        }
+        
         //======================================================== Events
 
         // Page Loading Event
@@ -886,8 +919,11 @@
         imgProfile.addEventListener('click', ()=> { accountShow(true)});
         dlgAccountCloseBtn.addEventListener('click', function(){ accountShow(false)});
         dlgAccountLogout.addEventListener('click', function(){ if (confirm("Are you sure you want to logout?")) logoutUser()});
-        dlgAccountEdit.addEventListener('click', function(){ alert('Edit')});
+        dlgAccountChange.addEventListener('click', function(){ changePassword()});
         
+        // Dialog Reset PW Email Sent
+        dlgGotIt.addEventListener('click', ()=> { dlgRegistered.style.display = "none" });
+
     </script>
     <script src="script/progressbar.js"></script>
 </body>

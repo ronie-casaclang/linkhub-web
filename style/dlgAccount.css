@@ -53,7 +53,7 @@
     background-color: var(--button-negative);
     color: var(--color);
 }
-#dlgAccount > div > #dlgAccountEdit { display: none; }
+#dlgAccount > div > #dlgAccountChange { display: none; }
 /*#dlgAccount > div > #dlgAccountLogout { background-color: var(--color); color: var(--background); }*/
 #dlgAccount > div > #dlgAccountCloseBtn {
     margin: 0;
