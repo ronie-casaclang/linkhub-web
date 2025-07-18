@@ -1,0 +1,240 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: white;
+    color: black;
+    box-sizing: border-box;
+}
+header {
+    padding: 10px 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
+header > img { width: 150px; }
+header > a {
+    padding: 15px 35px;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    text-decoration: none;
+}
+header > a:hover { background-color: rgb(16, 0, 191); }
+
+/* Sections */
+.section{
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Section 1 - Hero */
+.section-1{
+    padding: 100px 10px;
+    text-align: center;
+    color: white;
+    background:
+        radial-gradient(35.36% 35.36% at 100% 25%,#0000 66%,#8d8dff 68% 70%,#0000 72%) 35px 35px/calc(2*35px) calc(2*35px),
+        radial-gradient(35.36% 35.36% at 0    75%,#0000 66%,#8d8dff 68% 70%,#0000 72%) 35px 35px/calc(2*35px) calc(2*35px),
+        radial-gradient(35.36% 35.36% at 100% 25%,#0000 66%,#8d8dff 68% 70%,#0000 72%) 0 0/calc(2*35px) calc(2*35px),
+        radial-gradient(35.36% 35.36% at 0    75%,#0000 66%,#8d8dff 68% 70%,#0000 72%) 0 0/calc(2*35px) calc(2*35px),
+        repeating-conic-gradient(var(--primary) 0 25%,#0000 0 50%) 0 0/calc(2*35px) calc(2*35px),
+        radial-gradient(#0000 66%,#8d8dff 68% 70%,#0000 72%) 0 calc(35px/2)/35px 35px
+        var(--primary);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.section-1 > h1 {
+    margin: 10px;
+    max-width: 600px;
+    font-size: 50px;
+}
+.section-1 > p {
+    font-size: 23px;
+    max-width: 600px;
+}
+.section-1 > a {
+    margin-top: 20px;
+    min-width: 250px;
+    padding: 15px 20px 15px 30px;
+    text-decoration: none;
+    background-color: white;
+    color: var(--primary);
+    outline: none;
+    border: none;
+    border-radius: 25px;
+    box-shadow: 1px 1px 20px rgba(102, 102, 102, 0.525);
+    box-sizing: border-box;
+}
+.section-1 > a:hover { background-color: gold; }
+
+/* Section 2 - Features */
+.section-2 {
+    margin-top: 50px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.section-2 > h1 { margin: 0px; }
+.section-2 > div {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    row-gap: 20px;
+    column-gap: 20px;
+}
+.section-2 > div > .featureBox {
+    padding: 20px 20px 50px;
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 10px rgb(205, 205, 205);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+.section-2 > div > .featureBox > img {
+    margin: 30px;
+    width: 90px;
+    height: 90px;
+}
+.section-2 > div > .featureBox > h3, 
+.section-2 > div > .featureBox > p {
+    width: 100%;
+    text-align: start;
+    margin: 15px 0px 0px;
+    font-weight: normal;
+}
+.section-2 > div > .featureBox > h3 { text-shadow: 0.1px 0.1px 0px black; }
+ 
+
+/* Section 3 - FAQs*/
+.section-3 {
+    margin-top: 50px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.section-3 > h1 { margin: 0px; }
+.section-3 > div {
+    padding: 30px 0px;
+    width: 100%;
+    max-width: 1000px;
+    text-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    row-gap: 20px;
+    column-gap: 20px;
+    box-sizing: border-box;
+}
+.section-3 > hr {
+    margin: 0;
+    width: 100%; 
+    max-width: 1000px;
+}
+.section-3 > div > span {
+    display: flex;
+    align-items: center;
+    column-gap: 15px;
+}
+.section-3 > div > span > img {
+    padding: 5px;
+    width: 35px;
+    height: 35px;
+    background-color: rgb(223, 223, 223);
+    border-radius: 50%;
+    box-sizing: border-box;
+}
+.section-3 > div > span > img:hover { background-color: rgb(194, 194, 194);}
+.section-3 > div > span > img:active { opacity: 50%; }
+.section-3 > div > span > h3 { margin: 0; }
+.section-3 > div > p { margin: 0; padding-left: 50px; }
+#answer1, #answer2, #answer3, #answer4, #answer5 { display: none; }
+
+
+/* Section 4 - Too many tabs? */
+.section-4 {
+    padding: 70px 0px 0px;
+    background-color: var(--primary);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.section-4 > h2 { margin: 0; font-size: 50px; }
+.section-4 > h2 > span { font-weight: normal; }
+.section-4 > p {
+    margin: 0;
+    padding: 20px;
+    max-width: 720px;
+    font-size: large;
+}
+.section-4 > p > a {
+    padding: 10px 25px;
+    background-color: white;
+    border-radius: 25px;
+    text-decoration: none;
+}
+.section-4 > p > a:hover{ background-color: gold; }
+.section-4 > img {
+    margin: 0;
+    width: 100%;
+    max-width: 700px;
+}
+
+/* Footer */
+footer {
+    width: 100%;
+    padding: 5px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+
+
+
+/* Mobile Phone */
+@media only screen and (max-width: 600px){
+    header > a { padding: 10px 25px; }
+    .section-1 > h1 { font-size: 40px;}
+    .section-1 > p { font-size: 18px;}
+    .section-1 > a { background-color: gold; }
+    .section-2 > div { flex-direction: column; }
+    .section-2 > div > .featureBox { width: 100%;}
+    
+    .section-4 > h2 {
+        font-size: 35px;
+        max-width: 270px;
+        text-align: end;
+    }
+    .section-4 > p { 
+        font-size: 16px; 
+        padding: 30px 60px; 
+        text-align: end;
+    }
+    .section-4 > p > a {
+        padding: 0;
+        background-color: transparent;
+        color: gold;
+        text-decoration: underline;
+    }
+    footer { padding: 0px;}
+}

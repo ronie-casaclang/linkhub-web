@@ -3,13 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LinkHub Main</title>
+    <meta name="theme-color" content="#0000ff">
+    <title>Welcome to LinkHub</title>
+    <link rel="shortcut icon" href="images/app/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="style/root.css">
+    <link rel="stylesheet" href="style/index.css">
+    <link rel="stylesheet" href="style/progressbar.css">
 </head>
 <body>
-    <script>
-        document.addEventListener("DOMContentLoaded", (event) => {
-            location.href = "login.html";
+    
+    <!-- Dialog ProgressBar -->
+    <div id="dlgProgressBar">
+        <div id="progressBar"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <img id="logo" src="images/app/logo.png">
+        <a href="login.html">Login</a>
+    </header>
+
+    <!-- Hero -->
+    <div class="section section-1">
+        <h1>All Your Links. One Hub</h1>
+        <p>Never lose a useful link again. Store, organize, and access your favorite links anytime, anywhere — free and simple.</p> 
+        <a href="register.html">Get Started →</a>
+    </div>
+    
+    <!-- Section 2 -->
+    <div class="section section-2">
+        <h1> Organize Smarter with LinkHub </h1>
+        <p> Explore the tools that help you save, find, and manage your favorite links with ease. </p>
+        <br><br>
+        <div>
+            <div class="featureBox">
+                <img src="images/app/icon-save.png" alt="" srcset="">
+                <h3>Save & Organize Links Easily</h3>
+                <p>Store all your important websites, resources, and content in one convenient place.</p>
+            </div>
+
+            <div class="featureBox">
+                <img src="images/app/icon-clock.png" alt="" srcset="">
+                <h3>Access Anytime, Anywhere</h3>
+                <p>Whether you're on your phone, laptop, or desktop, your links are always with you.</p>
+            </div>
+
+            <div class="featureBox">
+                <img src="images/app/icon-search.png" alt="" srcset="">
+                <h3>Quick Search & Filter</h3>
+                <p>Find the link you need in seconds with fast, built-in search. No more endless scrolling or guesswork.</p>
+            </div>
+            
+        </div>
+    </div>
+
+    
+    <!-- Section 2 -->
+    <div class="section section-3">
+        <h1> Frequently Asked Questions (FAQs) </h1>
+        <p> Here are some common questions about LinkHub and how it can help you organize your online life. </p>
+        <br><br>
+        <hr>
+        <div>
+            <span> 
+                <img id="question1" src="images/app/icon-arrow-next.png" alt="">
+                <h3> What is LinkHub?</h3>
+            </span>
+            <p id="answer1">LinkHub is a free online tool where you can save, organize, and access all your favorite or important website links in one place. It's designed to simplify your digital life.</p>
+        </div>
+        <hr>
+        <div>
+            <span> 
+                <img id="question2" src="images/app/icon-arrow-next.png" alt="">
+                <h3>Is LinkHub free to use?</h3>
+            </span>
+            <p id="answer2">Yes, 100%! LinkHub is completely free to use — no subscriptions, no hidden fees. Just sign up and start saving your links.</p>
+        </div>
+        <hr>
+        <div>
+            <span> 
+                <img id="question3" src="images/app/icon-arrow-next.png" alt="">
+                <h3>Do I need to install anything?</h3>
+            </span>
+            <p id="answer3">Nope! LinkHub is a web-based platform. You don’t need to download or install anything. Just visit the site, log in, and you’re good to go on any device.</p>
+        </div>
+        <hr>
+        <div>
+            <span> 
+                <img id="question4" src="images/app/icon-arrow-next.png" alt="">
+                <h3>Can I use LinkHub on my phone?</h3>
+            </span>
+            <p id="answer4">Yes! LinkHub works smoothly on mobile browsers as well as on desktops and laptops. Your links are accessible wherever you are.</p>
+        </div>
+        <hr>
+        <div>
+            <span> 
+                <img id="question5" src="images/app/icon-arrow-next.png" alt="">
+                <h3>Is my data safe?</h3>
+            </span>
+            <p id="answer5">Yes. Your saved links are stored securely and are only visible to you. We respect your privacy and do not share your data with anyone.</p>
+        </div>
+    </div>
+    
+    <!-- Section 4 -->
+    <div class="section section-4">
+        <h2> Too many tabs? <span>We feel you</span></h2>
+        <p> Organize your online life with LinkHub — <a href="register.html">Signup Now</a></p>
+        <img src="images/app/img-mockup.png" alt="">
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <p id="footerText">© 2025 LinkHub. All rights reserved</p>
+    </footer>
+    
+    <!-- Script -->
+    <script type="module">
+
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+
+        // Web App Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBWDrx76I3HMdEFy_NGZ9kWGx8HW9Igy-8",
+            authDomain: "myproject-a3e0c.firebaseapp.com",
+            databaseURL: "https://myproject-a3e0c-default-rtdb.firebaseio.com",
+            projectId: "myproject-a3e0c",
+            storageBucket: "myproject-a3e0c.firebasestorage.app",
+            messagingSenderId: "479799357780",
+            appId: "1:479799357780:web:20c7d674b907e75e4d58c1"
+        };
+
+        // Initialize 
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Authenticate - signed in
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                user.getIdToken(true).then((token)=>{
+                    if (user.emailVerified) window.location.href = "home.html";
+                });
+            }
+            progressbar_show(false); 
         });
+        
+        // ============================================= Events
+
+        // Load Footer
+        document.addEventListener('DOMContentLoaded', ()=>{ footerText.innerText = `© ${new Date().getFullYear()} LinkHub | All rights reserved` });
+
+        // Prevent right click
+        document.addEventListener('contextmenu', (e)=> { event.preventDefault() });
+        
+        // FAQs
+        var faq1 = true, faq2 = true, faq3 = true, faq4 = true, faq5 = true; 
+        question1.addEventListener('click', ()=> { FaqsClick(1, faq1, question1, answer1)});
+        question2.addEventListener('click', ()=> { FaqsClick(2, faq2, question2, answer2)});
+        question3.addEventListener('click', ()=> { FaqsClick(3, faq3, question3, answer3)});
+        question4.addEventListener('click', ()=> { FaqsClick(4, faq4, question4, answer4)});
+        question5.addEventListener('click', ()=> { FaqsClick(5, faq5, question5, answer5)});
+
+        // Expand/Collapse
+        function FaqsClick(num, res, img, ans) {
+            if (res) {
+                img.src = "images/app/icon-arrow-expand.png";
+                ans.style.display = "block";
+            }
+            else {
+                img.src = "images/app/icon-arrow-next.png";
+                ans.style.display = "none";
+            }
+            switch (num){
+                case 1: faq1 = !res; break;
+                case 2: faq2 = !res; break;
+                case 3: faq3 = !res; break;
+                case 4: faq4 = !res; break;
+                case 5: faq5 = !res; break;
+            }
+        };
     </script>
+    <script src="script/progressbar.js"></script>
 </body>
 </html>
