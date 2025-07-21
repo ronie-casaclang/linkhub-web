@@ -236,5 +236,6 @@ footer {
         color: gold;
         text-decoration: underline;
     }
+    .section-4 > p > a:hover{ background-color: transparent; }
     footer { padding: 0px;}
 }

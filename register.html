@@ -64,12 +64,17 @@
                     Already have an account? 
                     <a href="login.html"> Login Now </a>
                 </span>
+                <br><br>
+                <div id="googleBox">
+                    <img src="images/icons/google.png" alt="">
+                    <p>Continue with Google</p>
+                </div>
             </form>
         </div>
         <div class="display-panel">
             <img src="images/app/register-illustration.png">
             <h1>LinkHub</h1>
-            <p>"Keep your web life in one place. <br> With Linkhub, you can easily store and access all your favorite links whenever you need them."</p>
+            <p>"Keep your web life in one place. <br> With LinkHub, you can easily store and access all your favorite links whenever you need them."</p>
         </div>
     </div>
 
@@ -77,7 +82,7 @@
 
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+        import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 
         // Web App Firebase configuration
         const firebaseConfig = {
@@ -93,6 +98,7 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
 
         // Authenticate - signed in
         onAuthStateChanged(auth, (user) => {
@@ -102,6 +108,23 @@
                 });
             }
         });
+
+        // Continue with Google
+        function loginGoogle(){
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    const user = result.user;
+                    const isNew = result._tokenResponse?.isNewUser;
+                    if (isNew) {
+                        alert("👋 Welcome new user: " + user.displayName);
+                        // Handle new user setup (e.g., add to database)
+                    } else {
+                        alert("👋 Welcome back: " + user.displayName);
+                    }
+                }).catch((error) => {
+                    alert("❌ Sign-in failed: " + error.message);
+                });
+        }
 
         // Register
         function registerUser(auth, email, password) {
@@ -153,6 +176,9 @@
                 registerUser(auth, txtEmail.value, txtCreatePassword.value);
             }
         }
+
+        // Continue with Google
+        googleBox.addEventListener('click', ()=> {loginGoogle()});
 
         // Login Now
         dlgRegisteredLogin.addEventListener('click', ()=> { location.href = "login.html" });

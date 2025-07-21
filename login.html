@@ -53,12 +53,17 @@
                     Don't have an account? 
                     <a href="register.html"> Create Account </a>
                 </span>
+                <br><br>
+                <div id="googleBox">
+                    <img src="images/icons/google.png" alt="">
+                    <p>Continue with Google</p>
+                </div>
             </form>
         </div>
         <div class="display-panel">
             <img src="images/app/login-illustration.png">
             <h1>LinkHub</h1>
-            <p>"Welcome back! Linkhub is your personal online link organizer—simple, fast, and always there when you need it."</p>
+            <p>"Welcome back! LinkHub is your personal online link organizer—simple, fast, and always there when you need it."</p>
         </div>
     </div>
 
@@ -66,7 +71,7 @@
 
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+        import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 
         // Web App Firebase configuration
         const firebaseConfig = {
@@ -82,6 +87,7 @@
         // Initialize 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
 
         // Authenticate - signed in
         onAuthStateChanged(auth, (user) => {
@@ -91,6 +97,23 @@
                 });
             }
         });
+
+        // Continue with Google
+        function loginGoogle(){
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    const user = result.user;
+                    const isNew = result._tokenResponse?.isNewUser;
+                    if (isNew) {
+                        alert("👋 Welcome new user: " + user.displayName);
+                        // Handle new user setup (e.g., add to database)
+                    } else {
+                        alert("👋 Welcome back: " + user.displayName);
+                    }
+                }).catch((error) => {
+                    alert("❌ Sign-in failed: " + error.message);
+                });
+        }
 
         // Login
         function loginUser(auth, email, password) {
@@ -146,6 +169,9 @@
             progressbar_show(true)
             loginUser(auth, txtEmail.value, txtPassword.value);
         }
+
+        // Continue with Google
+        googleBox.addEventListener('click', ()=> {loginGoogle()});
 
         // Textbox keypress
         txtEmail.addEventListener('input', ()=>{ failedMsg.style.visibility = 'hidden'; });
